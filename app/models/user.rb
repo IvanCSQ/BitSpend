@@ -12,6 +12,7 @@ class User < ApplicationRecord
       user.full_name = auth.info.name
       user.avatar_url = auth.info.image
     end
-
   end
+
+  has_many :categories
 end

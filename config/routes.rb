@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   root to: "pages#home"
+  # resources :pages, only: [:home]
+  resources :expenses, only: [:new, :create, :index, :analysis]
+  resources :categories, only: [:index, :new, :create]
 end
