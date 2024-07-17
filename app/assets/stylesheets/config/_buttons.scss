@@ -20,3 +20,10 @@ button:active {
   border-bottom: 4px solid red;
   }
 }
+
+.google-login {
+  height: 75px;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  margin: 15px;
+}
+
