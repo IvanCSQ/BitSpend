@@ -29,3 +29,20 @@ entertainment.save!
 transport = Category.new(name: "Transport", user: tom)
 transport.save!
 puts "Finished!"
+
+puts "Creating expenses..."
+ntuc = Expense.new(date: Date.new(2024, 7, 15), name: "NTUC", amount: 24.50, category: grocery)
+ntuc.save!
+
+starbucks = Expense.new(date: Date.new(2024, 7, 17), name: "Starbucks", amount: 7, category: fnb)
+starbucks.save!
+
+jellycat = Expense.new(date: Date.new(2024, 7, 5), name: "Jellycat", amount: 99, category: shopping)
+jellycat.save!
+
+movie = Expense.new(date: Date.new(2024, 7, 17), name: "Shaw", amount: 17, category: entertainment)
+movie.save!
+
+grab = Expense.new(date: Date.new(2024, 7, 12), name: "Grab", amount: 23.70, category: transport)
+grab.save!
+puts "Finished!"
