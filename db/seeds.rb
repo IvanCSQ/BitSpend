@@ -9,7 +9,7 @@
 #   end
 
 puts "Creating user..."
-tom = User.new(uid: "Tom", password: "123456")
+tom = User.new(uid: "Tom", password: "123456", email: "tom@gmail.com")
 tom.save!
 puts "Finished!"
 
