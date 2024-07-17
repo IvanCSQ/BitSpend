@@ -12,3 +12,11 @@ button {
   border-right: 4px solid #ABAFB0;
   border-bottom: 4px solid #ABAFB0;
 }
+
+button:active {
+  background-color: $blue;
+  .button-inner {
+    border-right: 4px solid red;
+  border-bottom: 4px solid red;
+  }
+}
