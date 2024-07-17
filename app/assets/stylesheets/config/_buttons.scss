@@ -1,0 +1,14 @@
+button {
+  // width: 100%;
+  font-family: $body-fonts;
+  background-color: transparent;
+  padding: 12px 16px;
+  color: $text;
+  border: none;
+  box-shadow: -3px 0 0 0 $text, 3px 0 0 0 $text, 0 -3px 0 0 $text, 0 3px 0 0 $text;
+}
+
+.button-inner {
+  border-right: 3px solid #ABAFB0;
+  border-bottom: 3px solid #ABAFB0;
+}
