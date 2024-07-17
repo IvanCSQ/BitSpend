@@ -1,0 +1,29 @@
+.chat-container {
+  // background-color: red;
+  width: 100%;
+  height: 640px;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+}
+
+.chat-container-inner {
+  height: calc(100% - 4px);
+  border-right: 4px solid #ABAFB0;
+  border-bottom: 4px solid #ABAFB0;
+}
+
+.chat-top {
+  height: 477px;
+}
+
+.chat-divider{
+  background-color: $text;
+  height: 4px;
+  width: calc(100% - 40px);
+  margin-left: 20px;
+}
+
+.chat-bottom {
+  // background-color: red;
+  // border-top: 4px solid $text;
+  height: 159px;
+}
