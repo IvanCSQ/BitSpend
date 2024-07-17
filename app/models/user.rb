@@ -16,4 +16,14 @@ class User < ApplicationRecord
 
   has_many :categories
   has_many :expenses, through: :categories
+
+  def total_expenses_amount
+    total = 0
+
+    expenses.each do |expense|
+      total += expense.amount
+    end
+
+    total
+  end
 end
