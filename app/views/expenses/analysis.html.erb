@@ -7,10 +7,12 @@
       <p class="m-0"><%= category.name.downcase %></p>
       <p class="m-0">$<%= sprintf('%.2f', category.expenses_amount) %></p>
     </div>
-    <div class="d-none bg-light d-flex justify-content-between mx-4 p-2 border rounded">
+    <div class="d-none bg-light mx-4 p-2 border rounded">
       <% category.expenses.each do |expense| %>
-        <p class="m-0"><%= expense.name.downcase %></p>
-        <p class="m-0">$<%= sprintf('%.2f', expense.amount) %></p>
+        <div class="d-flex justify-content-between">
+          <p class="m-1"><%= expense.name.downcase %></p>
+          <p class="m-1">$<%= sprintf('%.2f', expense.amount) %></p>
+        </div>
       <% end %>
     </div>
   <% end %>
