@@ -3,9 +3,15 @@
   <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_expenses_amount) %></p>
 
   <% current_user.categories.each do |category| %>
-    <div class="d-flex justify-content-between mx-4 my-2 p-3 border rounded">
+    <div class="bg-info d-flex justify-content-between mx-4 mt-3 p-2 border rounded">
       <p class="m-0"><%= category.name.downcase %></p>
       <p class="m-0">$<%= sprintf('%.2f', category.expenses_amount) %></p>
+    </div>
+    <div class="d-none bg-light d-flex justify-content-between mx-4 p-2 border rounded">
+      <% category.expenses.each do |expense| %>
+        <p class="m-0"><%= expense.name.downcase %></p>
+        <p class="m-0">$<%= sprintf('%.2f', expense.amount) %></p>
+      <% end %>
     </div>
   <% end %>
 </div>
