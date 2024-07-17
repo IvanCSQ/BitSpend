@@ -1,4 +1,11 @@
 <div>
   <h1 class="text-center">July 2024</h1>
-  <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', @total) %></p>
+  <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_expenses_amount) %></p>
+
+  <% current_user.categories.each do |category| %>
+    <div class="d-flex justify-content-between mx-4 my-2 p-3 border rounded">
+      <p class="m-0"><%= category.name.downcase %></p>
+      <p class="m-0">$<%= sprintf('%.2f', category.expenses_amount) %></p>
+    </div>
+  <% end %>
 </div>
