@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   get "analysis", to: "expenses#analysis"
 
   resources :categories, only: [:index, :new, :create]
+  resources :conversations, only: [:index]
+  resources :conversation_responses, only: [:index]
 end

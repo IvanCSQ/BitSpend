@@ -1,0 +1,13 @@
+<div class="d-flex flex-column container mt-2" data-controller="conversation">
+
+  <section class="flex-grow-1 px-3" data-conversation-target="response">
+  </section>
+
+  <div class="flex-shrink-0">
+    <%= form_with html: {class: "mb-2", data: { action: "conversation#generateResponse" }}  do |f| %>
+      <%= f.label :message, "ask me anything" %>
+      <%= f.text_field :message, { data: { conversation_target: "prompt" }, class: "form-control"} %>
+    <% end %>
+    <button class="btn btn-primary btn-outline-dark btn-sm mb-2" data-action="click->conversation#resetChat">reset chat</button>
+  </div>
+</div>
