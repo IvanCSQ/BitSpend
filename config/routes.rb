@@ -22,4 +22,6 @@ Rails.application.routes.draw do
     end
   end
   resources :categories, only: [:index, :new, :create]
+  resources :conversations, only: [:index]
+  resources :conversation_responses, only: [:index]
 end
