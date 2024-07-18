@@ -86,5 +86,18 @@
 .chat-bottom {
   // background-color: red;
   // border-top: 4px solid $text;
-  height: 124px;
+  // height: 124px;
+  width: 100%;
+  padding: 20px;
+}
+
+#chat-form {
+  display: flex;
+  align-items: center;
+}
+
+#chat-form > textarea {
+  background-color: transparent;
+  font-family: $body-fonts;
+  border: none;
 }
