@@ -76,3 +76,6 @@ gem "omniauth-rails_csrf_protection", "~> 1.0"
 gem "dotenv-rails"
 
 gem 'acts-as-taggable-on'
+
+# to run scss files
+gem 'sassc-rails'
