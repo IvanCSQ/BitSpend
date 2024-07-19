@@ -1,7 +1,7 @@
 <div data-controller="toggle">
   <h1 class="text-center">July 2024</h1>
+  <canvas data-controller="chart" class="w-70 h-70 mx-auto"></canvas>
   <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_expenses_amount) %></p>
-
   <% current_user.categories.each do |category| %>
     <div class="bg-info d-flex justify-content-between mx-4 mt-3 p-2 border rounded" data-toggle-target="clickableElement" data-action="click->toggle#show">
       <p class="m-0"><%= category.name.downcase %></p>
