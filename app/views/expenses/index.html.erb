@@ -1,0 +1,33 @@
+<h1>July 2024</h1>
+<div>
+  <button>
+    <select name="category" id="category">
+      <% @cats.each do |cat| %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+      <% end %>
+    </select>
+  </button>
+  <button>
+    <select name="tag" id="tag">
+      <% @fil_exp.each do |exp| %>
+        <option value="<%= exp.id %>"><%= exp.name %></option>
+      <% end %>
+    </select>
+  </button>
+</div>
+
+<div>
+  <%= current_user.email %>
+  <% @cats.each do |cat|%>
+    <div>
+      <span><%= cat.name %></span>
+    </div>
+  <% end %>
+
+  <% @expenses.each do |exp| %>
+    <div>
+      <span><%= exp.name %></span>
+      <span><%= exp.amount %></span>
+    </div>
+  <% end %>
+</div>
