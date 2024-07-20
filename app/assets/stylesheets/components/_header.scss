@@ -1,0 +1,27 @@
+#header {
+  letter-spacing: -6px;
+  background-color: $navbar;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#head-style {
+  width: 25%;
+  margin-right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sub-style {
+  height: 24px;
+  width: 24px;
+  letter-spacing: 0px;
+  border-radius: 8px;
+  background-color: $pink;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
