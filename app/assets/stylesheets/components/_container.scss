@@ -1,0 +1,22 @@
+body {
+  height: 100vh;
+  height: 100svh;
+  min-width: 320px;
+  max-width: 425px;
+  width: auto;
+  padding: 8px;
+  margin: 0 auto;
+  // display: flex;
+  // flex-direction: column;
+  // justify-content: center;
+}
+
+#container {
+  border: 12px solid $text;
+  border-radius: 24px;
+  // margin: 16px;
+  // padding: 8px;
+  height: 100%;
+  overflow-y: auto;
+  // min-width: 320px;
+}
