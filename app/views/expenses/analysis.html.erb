@@ -1,6 +1,6 @@
 <div data-controller="toggle">
   <h1 class="text-center">July 2024</h1>
-  <canvas data-controller="chart" class="w-70 h-70 mx-auto"></canvas>
+  <canvas class="w-70 h-70 mx-auto" data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_expenses_amount.to_json %>"></canvas>
   <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_expenses_amount) %></p>
   <% current_user.categories.each do |category| %>
     <div class="bg-info d-flex justify-content-between mx-4 mt-3 p-2 border rounded" data-toggle-target="clickableElement" data-action="click->toggle#show">

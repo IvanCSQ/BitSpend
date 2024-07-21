@@ -26,4 +26,14 @@ class User < ApplicationRecord
 
     total
   end
+
+  def category_expenses_amount
+    total_per_category = {}
+
+    expenses.each do |expense|
+      total_per_category[expense.category.name] ? total_per_category[expense.category.name] += expense.amount : total_per_category[expense.category.name] = expense.amount
+    end
+
+    total_per_category
+  end
 end
