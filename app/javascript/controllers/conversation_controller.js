@@ -11,6 +11,11 @@ export default class extends Controller {
     console.log("connected");
   }
 
+  saveExpense(event) {
+    event.preventDefault()
+    this.#createExpense()
+  }
+
   generateResponse(event) {
     event.preventDefault()
     this.#createLabel('you')
@@ -19,6 +24,28 @@ export default class extends Controller {
     this.currentContent = this.#createMessage("")
     this.#setupEventSource()
     this.promptTarget.value = ""
+  }
+
+  async #createExpense() {
+    try {
+      const response = await fetch('/expenses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': this.csrfToken
+        },
+      })
+      const data = await response.json()
+      if (response.ok) {
+        this.#createLabel('assistant')
+        this.#createMessage("Ok saved!")
+      } else {
+        alert('Error: ' + data.errors.join(', '))
+      }
+    } catch (error) {
+      console.error('Error:', error)
+      alert('An error occurred while creating the expense.')
+    }
   }
 
   #createLabel(text) {
@@ -43,7 +70,6 @@ export default class extends Controller {
 
   #handleMessage(event) {
     const parsedData = JSON.parse(event.data)
-    // this.currentContent.innerHTML += marked.parse(parsedData.message)
     new Typed(this.currentContent, {
       strings: [marked.parse(parsedData.message)],
       showCursor: false,

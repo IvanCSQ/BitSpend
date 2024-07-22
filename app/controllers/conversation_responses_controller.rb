@@ -8,7 +8,7 @@ class ConversationResponsesController < ApplicationController
 
     # Change this service whenever another is needed
     begin
-      AiService.new(prompt: prompt, response: response).call
+      AiService::TextInput.new(prompt: prompt, response: response).call
     rescue StandardError => e
       puts "An error occurred: #{e.message}"
     end
