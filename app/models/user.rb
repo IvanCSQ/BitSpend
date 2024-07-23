@@ -17,23 +17,33 @@ class User < ApplicationRecord
   has_many :categories
   has_many :expenses, through: :categories
 
-  def total_expenses_amount
+  def total_monthly_expense(month)
     total = 0
 
     expenses.each do |expense|
-      total += expense.amount
+      total += expense.amount if expense.date.strftime('%B%Y') == month
     end
 
     total
   end
 
-  def category_expenses_amount
+  def category_monthly_expense(month)
     total_per_category = {}
 
     expenses.each do |expense|
-      total_per_category[expense.category.name] ? total_per_category[expense.category.name] += expense.amount : total_per_category[expense.category.name] = expense.amount
+      if expense.date.strftime('%B%Y') == month
+        total_per_category[expense.category.name] ? total_per_category[expense.category.name] += expense.amount : total_per_category[expense.category.name] = expense.amount
+      end
     end
 
     total_per_category
+  end
+
+  def months_with_expenses
+    expenses_month_year = expenses.map do |expense|
+      expense.date.strftime('%B %Y')
+    end
+
+    expenses_month_year.uniq
   end
 end
