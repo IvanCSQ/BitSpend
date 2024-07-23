@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   # resources :pages, only: [:home]
   resources :expenses, only: [:new, :create, :index, :analysis]
   resources :categories, only: [:index, :new, :create]
+  resources :conversations, only: [:index]
+  resources :conversation_responses, only: [:index]
 end

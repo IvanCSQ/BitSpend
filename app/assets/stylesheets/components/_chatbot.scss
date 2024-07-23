@@ -5,6 +5,15 @@
   // might have to change according to chat codes
   // position: relative;
   padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.chat-section {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px
 }
 
 .chat-top {
@@ -89,6 +98,8 @@
   // height: 124px;
   width: 100%;
   padding: 20px;
+  position: sticky;
+  bottom: 0;
 }
 
 #chat-form {
@@ -100,4 +111,9 @@
   background-color: transparent;
   font-family: $body-fonts;
   border: none;
+}
+
+.large-text-field {
+  height: 30px;
+  width: 90%;
 }
