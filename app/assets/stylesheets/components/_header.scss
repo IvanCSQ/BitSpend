@@ -1,5 +1,4 @@
 #header {
-  letter-spacing: -6px;
   background-color: $navbar;
   padding: 4px;
   display: flex;
@@ -24,4 +23,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+h1 {
+  letter-spacing: -6px;
 }
