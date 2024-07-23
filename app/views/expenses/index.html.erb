@@ -2,6 +2,7 @@
 <div>
   <button>
     <select name="category" id="category">
+      <option value="">Category</option>
       <% @cats.each do |cat| %>
         <option value="<%= cat.id %>"><%= cat.name %></option>
       <% end %>
@@ -9,12 +10,43 @@
   </button>
   <button>
     <select name="tag" id="tag">
+      <option value="">Tag</option>
       <% @fil_exp.each do |exp| %>
         <option value="<%= exp.id %>"><%= exp.name %></option>
       <% end %>
     </select>
   </button>
 </div>
+
+<br>
+
+<div>
+  <select name="category" id="category">
+      <option value="">Category</option>
+      <% @cats.each do |cat| %>
+        <option value="<%= cat.id %>"><%= cat.name %></option>
+      <% end %>
+    </select>
+    <select name="tag" id="tag">
+      <option value="">Tag</option>
+      <% @fil_exp.each do |exp| %>
+        <option value="<%= exp.id %>"><%= exp.name %></option>
+      <% end %>
+    </select>
+  </button>
+</div>
+
+<br>
+
+<div id="cat-selection">
+  <span>Category</span><i class="fa-solid fa-caret-down"></i>
+  <% @cats.each do |cat| %>
+    <span><%= cat.name %></span>
+  <% end %>
+</div>
+
+
+<div id="display-total">Total</div>
 
 <div>
   <%= current_user.email %>
