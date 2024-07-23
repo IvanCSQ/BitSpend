@@ -11,7 +11,7 @@
   </head>
 
   <body>
-    <main id="container">
+    <main>
 
       <div id="header">
         <h1>BitSpend</h1>
@@ -21,13 +21,14 @@
           <div class="sub-style">x</div>
         </div>
       </div>
-
-      <%= yield %>
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
+      <div id="content">
+        <%= yield %>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
+      <nav>
+        <%= render "shared/navbar" %>
+      </nav>
     </main>
-    <nav>
-      <%= render "shared/navbar" %>
-    </nav>
   </body>
 </html>
