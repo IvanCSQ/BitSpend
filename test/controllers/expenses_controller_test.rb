@@ -6,3 +6,10 @@ class ExpensesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 end
+require "test_helper"
+
+class ExpensesControllerTest < ActionDispatch::IntegrationTest
+  # test "the truth" do
+  #   assert true
+  # end
+end
