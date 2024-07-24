@@ -13,17 +13,20 @@
 
   <canvas class="w-70 h-70 mx-auto" data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
 
-  <p class="text-center">TOTAL:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>
+  <p class="text-center">TOTAL:&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>
 
+  <%# Display all categories of user %>
   <% current_user.categories.each do |category| %>
-    <div class="bg-info d-flex justify-content-between mx-4 mt-3 p-2 border rounded" data-toggle-target="clickableElement" data-action="click->toggle#show">
-      <p class="m-0"><%= category.name.downcase %></p>
-      <p class="m-0">$<%= sprintf('%.2f', category.monthly_expense(params["date"])) %></p>
+    <div class="container-category" data-toggle-target="clickableElement" data-action="click->toggle#show">
+      <p><%= category.name.downcase %></p>
+      <p>$<%= sprintf('%.2f', category.monthly_expense(params["date"])) %></p>
     </div>
-    <div class="d-none bg-light mx-4 p-2 border rounded">
+
+    <%# Display all expenses in individual category for selected date %>
+    <div class="container-items" hidden>
       <% category.expenses.each do |expense| %>
         <% if expense.date.strftime('%B%Y') == params["date"]  %>
-          <div class="d-flex justify-content-between">
+          <div class="">
             <p class="m-1"><%= expense.name.downcase %></p>
             <p class="m-1">$<%= sprintf('%.2f', expense.amount) %></p>
           </div>

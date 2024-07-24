@@ -1,0 +1,39 @@
+@mixin container {
+  font-family: $body-fonts;
+  background-color: transparent;
+  padding: 12px 16px;
+  color: $text;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  border-right: 4px solid #ABAFB0;
+  border-bottom: 4px solid #ABAFB0;
+}
+
+.container-category {
+  @include container;
+  display: flex;
+  justify-content: space-between;
+  background-color: $pink;
+  margin-top: 20px;
+
+  p {
+    margin: 0;
+  }
+}
+
+.container-items {
+  @include container;
+  background-color: rgba(232, 194, 193, 0.5);
+
+  div {
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      margin: 0 0 12px 0;
+    }
+  }
+
+  div:last-of-type > p {
+    margin: 0;
+  }
+}

@@ -8,7 +8,14 @@ export default class extends Controller {
   }
 
   show(event) {
-    const toggleElement = event.currentTarget.nextElementSibling;
-    toggleElement.classList.toggle("d-none");
+    console.log(event.currentTarget.nextElementSibling);
+
+    const expenseList = event.currentTarget.nextElementSibling;
+
+    if (expenseList.hidden) {
+      expenseList.hidden = false;
+    } else {
+      expenseList.hidden = true;
+    }
   }
 }
