@@ -45,13 +45,22 @@ export default class extends Controller {
             return percentage;
           },
           anchor: 'end',
-          align: 'end',
-          offset: 0,
-          display: 'hidden',
-          rotation: 0,
+          align: 'start',
           font: {
             size: 12,
             family: '"Press Start 2P", "Helvetica", "sans-serif"'
+          },
+          textAlign: 'end',
+          rotation: function(context) {
+            console.log(context.chart.data.datasets[0].data);
+            const total = context.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+            let angles = []
+
+            context.chart.data.datasets[0].data.map((amount) => {
+
+            })
+
+            return angles
           }
         }
       },
