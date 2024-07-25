@@ -11,8 +11,9 @@
     <input type="submit" value="Submit" />
   </form>
 
-  <canvas class="w-70 h-70 mx-auto" data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
+  <canvas data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
 
+  <%# Display total expenses amount for selected date %>
   <p id="total-expenses-amount">TOTAL:&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>
 
   <%# Display all categories of user %>

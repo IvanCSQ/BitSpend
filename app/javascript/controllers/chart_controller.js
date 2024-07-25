@@ -12,7 +12,7 @@ export default class extends Controller {
   connect() {
     Chart.register(...registerables, ChartDataLabels);
 
-    const userCategories = this.categoryListValue.map((category) => category.name)
+    const userCategories = this.categoryListValue.map((category) => category.name.toLowerCase())
 
     const data = {
       labels: userCategories,
@@ -25,32 +25,44 @@ export default class extends Controller {
     const options = {
       plugins: {
         legend: {
-          display: false
+          display: true,
+          labels: {
+            font: {
+              family: '"Press Start 2P", "Helvetica", "sans-serif"',
+              size: 12,
+            },
+            boxWidth: 20
+          },
+          align: 'start'
         },
         datalabels: {
           formatter: (value, context) => {
             // Calculate percentage from value and total
             const total = context.chart.data.datasets[0].data.reduce((acc, val) => acc + val, 0);
-            const percentage = ((value / total) * 100).toFixed(2) + '%';
+            const percentage = ((value / total) * 100).toFixed(1) + '%';
 
             // Return label and percentage
-            return `${percentage}\n${context.chart.data.labels[context.dataIndex]}`;
+            return percentage;
           },
-          anchor: 'start',
+          anchor: 'end',
           align: 'end',
-          offset: 80,
+          offset: 0,
           display: 'hidden',
-          rotation: 0
+          rotation: 0,
+          font: {
+            size: 12,
+            family: '"Press Start 2P", "Helvetica", "sans-serif"'
+          }
         }
       },
       layout: {
         padding: {
-          left: 70,
-          right: 70,
-          top: 70,
-          bottom: 70
+          left: 80,
+          right: 80,
+          top: 0,
+          bottom: 0
         }
-      }
+      },
     }
 
     const config = {
