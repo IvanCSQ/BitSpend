@@ -1,20 +1,9 @@
 class ExpensesController < ApplicationController
   def index
-    # user = current_user
-    user_cat = []
-    user_exp = []
-    current_user.categories.each do |category|
-      user_cat << category
-    end
-    @cats = user_cat.flatten
-
-    current_user.expenses.each do |expense|
-      user_exp << expense
-    end
-    @expenses = user_exp.flatten
-    filter_exp = []
-    filter_exp << user_exp.uniq { |expense| expense.name }
-    @fil_exp = filter_exp.flatten
+    params[:date] = Date.today.strftime('%B%Y') if params[:date].nil?
+    @cats = current_user.categories
+    @tags = current_user.expenses.flat_map(&:tag_list).uniq
+    @expenses = current_user.expenses.to_json
   end
 
   def create

@@ -1,5 +1,7 @@
-<h1>July 2024</h1>
-<div>
+<h1><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
+
+<div id="expenses-data" data-controller="expenses" data-expenses='<%= @expenses %>'>
+  <!-- Your HTML content here, including the category and tag selections -->
   <button>
     <select name="category" id="category">
       <option value="">Category</option>
@@ -11,55 +13,14 @@
   <button>
     <select name="tag" id="tag">
       <option value="">Tag</option>
-      <% @fil_exp.each do |exp| %>
-        <option value="<%= exp.id %>"><%= exp.name %></option>
+      <% @tags.sort.each do |exp| %>
+        <option value="<%= exp %>"><%= exp %></option>
       <% end %>
     </select>
   </button>
-</div>
 
-<br>
+  <div id="count-total"></div>
+  <div id="display-expenses">
 
-<div>
-  <select name="category" id="category">
-      <option value="">Category</option>
-      <% @cats.each do |cat| %>
-        <option value="<%= cat.id %>"><%= cat.name %></option>
-      <% end %>
-    </select>
-    <select name="tag" id="tag">
-      <option value="">Tag</option>
-      <% @fil_exp.each do |exp| %>
-        <option value="<%= exp.id %>"><%= exp.name %></option>
-      <% end %>
-    </select>
-  </button>
-</div>
-
-<br>
-
-<div id="cat-selection">
-  <span>Category</span><i class="fa-solid fa-caret-down"></i>
-  <% @cats.each do |cat| %>
-    <span><%= cat.name %></span>
-  <% end %>
-</div>
-
-
-<div id="display-total">Total</div>
-
-<div>
-  <%= current_user.email %>
-  <% @cats.each do |cat|%>
-    <div>
-      <span><%= cat.name %></span>
-    </div>
-  <% end %>
-
-  <% @expenses.each do |exp| %>
-    <div>
-      <span><%= exp.name %></span>
-      <span><%= exp.amount %></span>
-    </div>
-  <% end %>
+  </div>
 </div>
