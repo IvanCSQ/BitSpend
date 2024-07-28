@@ -16,12 +16,12 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
   # resources :pages, only: [:home]
-  resources :expenses, only: [:new, :create, :index, :analysis] do
-    collection do
-      get :upload
-    end
-  end
+  resources :expenses, only: [:new, :create, :index, :analysis]
   resources :categories, only: [:index, :new, :create]
   resources :conversations, only: [:index]
-  resources :conversation_responses, only: [:index]
+  resources :conversation_responses, only: [:index] do
+    collection do
+      post :upload
+    end
+  end
 end

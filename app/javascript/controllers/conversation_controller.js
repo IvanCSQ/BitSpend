@@ -11,6 +11,29 @@ export default class extends Controller {
     console.log("connected");
   }
 
+  upload(e) {
+    e.preventDefault()
+    const fileInput = e.target;
+    const image = fileInput.files[0];
+    const formData = new FormData()
+    formData.append("images", image)
+
+    fetch('/conversation_responses/upload', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': this.csrfToken,
+      },
+      body: formData,
+    })
+    .then(response => response.json())
+  .then((data) => {
+    console.log(data);
+  })
+  .catch(error => {
+    console.error('Error:', error.message)
+  })
+}
+
   saveExpense(event) {
     event.preventDefault()
     this.#createExpense()
