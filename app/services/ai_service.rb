@@ -1,5 +1,6 @@
 class AiService
   require 'json'
+  require 'date'
   include ActionController::Live # allows us to stream response based on server-sent events, i.e. can initialise SSE below
 
   # Initialise with user's prompt and the metadata of the webpage which allows streaming
@@ -14,7 +15,7 @@ class AiService
       puts "This is the response: #{@response}"
 
       # See the schema method below under private methods. You can edit the schemas there.
-      schema_to_use = schema('simple')
+      schema_to_use = schema('complex')
 
       # Prompts must always be formatted as follows
       new_message = {
@@ -67,16 +68,22 @@ class AiService
       end
 
     ensure
+      # Add today's date manually
+      reply_json = JSON.parse(full_reply.join)
+      reply_json['expense']['date'] = Date.today.strftime
+      reply_to_save = reply_json.to_json
       # We join full_reply into a string to stream it
-      sse.write({ message: full_reply.join })
+      expense = reply_json['expense']
+      reply_to_print = "Category: #{expense['category']}:\n\n$#{format('%.2f', expense['amount'])} at #{expense['establishment']} on #{expense['date']}\n\nTags: #{expense['tag_list'].join(', ')}.\n\nPlease let me know if I got this right. Otherwise, hit 'Save Expense' to save this to your records."
+      sse.write({ message: reply_to_print })
       sse.close
     end
 
-    # Now we update the current Conversation record with the LLM's response
+    # Now we update the current Conversation record with the LLM's actual response
     new_message = {
       role: 'model',
       parts: {
-        text: full_reply.join
+        text: reply_to_save
       }
     }
     conversation = Conversation.last
@@ -98,6 +105,9 @@ class AiService
   def schema(option)
     # Note that I am hardcoding first user to take categories from, since not all users have categories
     categories = User.first.categories.pluck(:name)
+    user_expenses = Expense.joins(:category).includes(:tags).where(categories: { user: User.first })
+    user_tags = user_expenses.flat_map { |expense| expense.tags.pluck('name') }.uniq
+    today = Date.today.strftime
 
     # complex_prompt = 'I spent $27.50 at Jade Chicken today with friends today for lunch.'
     complex_schema = {
@@ -106,29 +116,36 @@ class AiService
         expense: {
           type: 'object',
           properties: {
-            name: {
-              type: 'string'
+            establishment: {
+              type: 'string',
+              description: "The name of the establishment where the expense was incurred (e.g., 'MacDonalds', 'Cold Storage')."
             },
-            date: {
-              type: 'string'
-            },
+        # Gemini does not seem to understand the concept of date
+            # date: {
+            #   type: 'string',
+            #   format: 'date',
+            #   description: "The date when the expense occurred in YYYY-MM-DD format.",
+            #   default: today #'2024-07-28'
+            # },
             amount: {
-              type: 'number'
+              type: 'number',
+              description: "The monetary amount of the expense."
             },
             category: {
               type: 'string',
-              enum: categories
+              enum: categories,
+              description: "The category of the expense. Must be one of the predefined values."
             },
-            taggings: {
+            tag_list: {
               type: 'array',
               items: {
-                type: 'object',
-                properties: {
-                  # To be filled in with Taggable attributes; not sure how to access them
-                }
-              }
+                type: 'string',
+              },
+              description: "A list of tags or keywords associated with the expense which should be inferred from the context. For example, from an input stating 'had dinner with family for $120 at Haidilao', the tag_list would be ['family', 'dinner']."
             }
-          }
+          },
+          required: ['establishment', 'amount', 'category', 'tag_list'],
+          description: "An object representing an individual expense entry."
         }
       }
     }
