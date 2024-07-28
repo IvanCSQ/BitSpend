@@ -1,21 +1,27 @@
+<h1 class="text-center"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
+
+<form class="text-center" action="#">
+  <label for="date">Month</label>
+  <select name="date" id="date">
+    <% current_user.months_with_expenses.each do |month| %>
+      <option value=<%= month.delete(' ') %>><%= month %></option>
+    <% end %>
+  </select>
+  <input type="submit" value="Submit" />
+</form>
+
+<form action="#" data-controller="datepicker">
+  <input type="date">
+</form>
+
+
+<%# Display chart for all categories %>
+<canvas data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
+
+<%# Display total expenses amount for selected date %>
+<p id="total-expenses-amount">TOTAL:&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>
+
 <div data-controller="toggle">
-  <h1 class="text-center"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
-
-  <form class="text-center" action="#">
-    <label for="date">Month</label>
-    <select name="date" id="date">
-      <% current_user.months_with_expenses.each do |month| %>
-        <option value=<%= month.delete(' ') %>><%= month %></option>
-      <% end %>
-    </select>
-    <input type="submit" value="Submit" />
-  </form>
-
-  <canvas data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
-
-  <%# Display total expenses amount for selected date %>
-  <p id="total-expenses-amount">TOTAL:&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>
-
   <%# Display all categories of user %>
   <% current_user.categories.each do |category| %>
     <div class="container-category" data-toggle-target="clickableElement" data-action="click->toggle#show">

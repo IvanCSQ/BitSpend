@@ -11,3 +11,4 @@ pin "chart.js/helpers", to: "https://ga.jspm.io/npm:chart.js@4.4.3/helpers/helpe
 pin "chartjs-plugin-datalabels", to: "https://ga.jspm.io/npm:chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.esm.js"
 pin "marked" # @13.0.0
 pin "typed.js" # @2.1.0
+pin "flatpickr" # @4.6.13
