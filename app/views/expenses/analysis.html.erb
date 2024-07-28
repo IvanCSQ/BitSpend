@@ -1,4 +1,8 @@
-<h1 class="text-center"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
+<div class="date-container">
+  <i class="fa-solid fa-caret-left"></i>
+  <h1 class="date-header"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
+  <i class="fa-solid fa-caret-right"></i>
+</div>
 
 <form class="text-center" action="#">
   <label for="date">Month</label>
@@ -10,7 +14,7 @@
   <input type="submit" value="Submit" />
 </form>
 
-<form action="#" data-controller="datepicker">
+<form action="#" >
   <input type="date">
 </form>
 

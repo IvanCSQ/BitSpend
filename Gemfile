@@ -85,3 +85,6 @@ gem 'sassc-rails'
 
 # for analysis pie chart
 gem 'chart-js-rails'
+
+# font awesome
+gem "font-awesome-sass", "~> 6.1"
