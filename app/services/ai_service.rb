@@ -6,7 +6,7 @@ class AiService
   def initialize(prompt: "", response:)
     @prompt = prompt
     @response = response
-    @image = image
+    # @image = image
   end
 
   class TextInput < AiService
