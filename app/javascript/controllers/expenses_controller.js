@@ -17,6 +17,11 @@ export default class extends Controller {
       // Reset tag selection
       tagSelect.value = "";
 
+      if (categoryId === "") {
+        this.hideExpenses();
+        return;
+      }
+
       // Filter expenses by selected category
       const filteredExpenses = expenses.filter(
         (expense) => expense.category_id == categoryId
@@ -31,6 +36,25 @@ export default class extends Controller {
     tagSelect.addEventListener("change", (event) => {
       const tagName = event.currentTarget.value;
       const selectedCategoryId = categorySelect.value;
+
+      // if (tagName === "") {
+      //   this.hideExpenses();
+      //   return;
+      // }
+
+      if (tagName === "") {
+        if (selectedCategoryId) {
+          // If the category has a value, display the category details
+          const filteredExpenses = expenses.filter(
+            (expense) => expense.category_id == selectedCategoryId
+          );
+          this.displayExpenses(filteredExpenses);
+          this.updateTotal(filteredExpenses);
+        } else {
+          this.hideExpenses();
+        }
+        return;
+      }
 
       let filteredExpenses;
 
@@ -67,17 +91,30 @@ export default class extends Controller {
     displayExpenses.innerHTML = "";
     filteredExpenses.forEach((expense) => {
       const expenseElement = document.createElement("div");
+      expenseElement.classList.add("expense-item"); // Add a single class
       expenseElement.innerHTML = `
-        <h3>${expense.name}</h3>
-        <p>${expense.amount}</p>
+        <p>${expense.name}</p>
+        <p><span>$</span>${expense.amount}</p>
       `;
       displayExpenses.appendChild(expenseElement);
     });
+    // Remove the 'hidden' class to display the expenses
+    displayExpenses.classList.remove("hidden");
+  }
+
+  hideExpenses() {
+    const displayExpenses = this.element.querySelector("#display-expenses");
+    displayExpenses.classList.add("hidden");
+    displayExpenses.innerHTML = ""; // Clear the displayed expenses
+    this.updateTotal([]); // Reset the total
   }
 
   updateTotal(filteredExpenses) {
     const totalElement = this.element.querySelector("#count-total");
-    const total = filteredExpenses.reduce((sum, expense) => sum + expense.amount, 0);
+    const total = filteredExpenses.reduce(
+      (sum, expense) => sum + expense.amount,
+      0
+    );
     totalElement.textContent = `Total: ${total}`;
   }
 }

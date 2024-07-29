@@ -1,0 +1,73 @@
+#selection {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 60px;
+  // border: 2px solid red;
+  margin-bottom: 20px;
+}
+
+.select-box * {
+  background-color: red;
+}
+
+.select-container {
+  // display: flex;
+  // justify-content: center;
+  // position: relative;
+  // min-width: 40px;
+  // height: 100%;
+  // margin: auto;
+}
+
+.select-box {
+  border: none;
+  // appearance: none;
+  font-family: $body-fonts;
+  color: $text;
+  background-color: $brown;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  display: flex;
+  justify-content: center;
+  height: 40px;
+  width: 160px;
+}
+
+#count-total {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+#display-expenses {
+  margin: 0 16px;
+  padding: 16px;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  background-color: $brown;
+}
+
+.hidden {
+  display: none;
+}
+
+.expense-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.expense-item p:first-of-type {
+  text-wrap: wrap;
+  // border: 2px solid red;
+  max-width: 80%;
+}
+
+.expense-item p:nth-of-type(2) {
+  min-width: 20%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.expense-item p span {
+  margin-right: auto;
+}

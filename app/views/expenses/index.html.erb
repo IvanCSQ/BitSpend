@@ -1,26 +1,31 @@
 <h1><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
 
 <div id="expenses-data" data-controller="expenses" data-expenses='<%= @expenses %>'>
-  <!-- Your HTML content here, including the category and tag selections -->
-  <button>
-    <select name="category" id="category">
-      <option value="">Category</option>
-      <% @cats.each do |cat| %>
-        <option value="<%= cat.id %>"><%= cat.name %></option>
-      <% end %>
-    </select>
-  </button>
-  <button>
-    <select name="tag" id="tag">
-      <option value="">Tag</option>
-      <% @tags.sort.each do |exp| %>
-        <option value="<%= exp %>"><%= exp %></option>
-      <% end %>
-    </select>
-  </button>
+  <%# <button> %>
+  <div id="selection">
+    <div class="select-container">
+      <select name="category" id="category" class="select-box">
+        <option value="">Category</option>
+        <% @cats.each do |cat| %>
+          <option value="<%= cat.id %>"><%= cat.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <%# </button> %>
+    <%# <button> %>
+    <div class="select-container">
+      <select name="tag" id="tag" class="select-box">
+        <option value="">Tag</option>
+        <% @tags.sort.each do |exp| %>
+          <option value="<%= exp %>"><%= exp %></option>
+        <% end %>
+      </select>
+    </div>
+  </div>
+  <%# </button> %>
 
   <div id="count-total"></div>
-  <div id="display-expenses">
+  <div id="display-expenses" class="hidden">
 
   </div>
 </div>
