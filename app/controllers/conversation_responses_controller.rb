@@ -16,15 +16,15 @@ class ConversationResponsesController < ApplicationController
   end
 
   def upload
-    response.headers['Content-Type'] = "application/json"  # Ensure the content type is JSON
-    image = params[:images]
+    response.headers['Content-Type'] = "text/event-stream"
+    image = params[:image]
 
-  #   begin
-  #     # Process the image (assuming AiService::UploadImage processes the image and returns a response)
-  #     result = AiService::UploadImage.new(image: image, response: response).call
-  #     render json: { message: "Image uploaded successfully", result: result }
-  #   rescue StandardError => e
-  #     render json: { error: e.message }, status: :internal_server_error
-  #   end
+    begin
+      # Process the image (assuming AiService::UploadImage processes the image and returns a response)
+      result = AiService::UploadImage.new(image: image, response: response).call
+      render json: { message: "Image uploaded successfully", result: result }
+    rescue StandardError => e
+      render json: { error: e.message }, status: :internal_server_error
+    end
   end
 end

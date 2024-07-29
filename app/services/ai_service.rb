@@ -1,4 +1,5 @@
 class AiService
+  require 'base64'
   require 'json'
   include ActionController::Live # allows us to stream response based on server-sent events, i.e. can initialise SSE below
 
@@ -6,7 +7,6 @@ class AiService
   def initialize(prompt: "", response:)
     @prompt = prompt
     @response = response
-    # @image = image
   end
 
   class TextInput < AiService
@@ -48,7 +48,62 @@ class AiService
     end
   end
 
+  class UploadImage < AiService
+
+    def initialize(image:, response:)
+      @image = image
+      @response = response
+    end
+
+    def call
+      # changes the image parsed to base64 encoded
+      base64image = Base64.encode64(File.read(@image.tempfile.path))
+      puts 'image encoded to base64 successfully'
+
+      # inputs the base64 encoded image into the correct format for AI
+      prompt_image = {
+        inlineData: {
+          "mimeType": 'image/*',
+          "data": base64image
+        },
+        {
+        "text": "what is this image?"
+        },
+      }
+
+      puts "mime_data successful"
+
+      # does this initialize it to start or to type into the chat interface?
+      new_message = {
+        role: 'user',
+        parts: [
+          prompt_image, {text: 'what is this image?'}
+        ]
+      }
+
+      puts "message crafted"
+
+      generation_config = {
+        "max_output_tokens": 8192,
+        "temperature": 1,
+        "top_p": 0.95,
+      }
+
+      image_response(prompt_image, generation_config, safety_settings)
+    end
+  end
+
+
   private
+
+  def image_response
+    client.generate_content(
+      [prompt_image, "what is this image"],
+      generation_config,
+      safety_settings,
+      stream=True,
+    )
+  end
 
   def get_response(response, conversation, config, schema)
     sse = SSE.new(response.stream, event: "message")

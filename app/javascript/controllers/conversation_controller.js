@@ -16,7 +16,7 @@ export default class extends Controller {
     const fileInput = e.target;
     const image = fileInput.files[0];
     const formData = new FormData()
-    formData.append("images", image)
+    formData.append("image", image)
 
     fetch('/conversation_responses/upload', {
       method: 'POST',
@@ -25,7 +25,7 @@ export default class extends Controller {
       },
       body: formData,
     })
-    .then(response => response.json())
+    .then(response => response.text())
   .then((data) => {
     console.log(data);
   })

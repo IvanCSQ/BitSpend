@@ -6,7 +6,7 @@
   <div class="chat-bottom">
     <%= form_with html: {class: "mb-2", data: { action: "conversation#generateResponse" }}  do |f| %>
       <%= f.text_field :message, placeholder: "tell me your expense", data: { conversation_target: "prompt" }, class: "form-control large-text-field" %>
-      <%= f.file_field :images, data: { action:"change->conversation#upload" }, accept: "image/*" %>
+      <%= f.file_field :image, data: { action:"change->conversation#upload" }, accept: "image/*" %>
     <% end %>
   <button class="btn" data-action="click->conversation#saveExpense">save expense</button>
   </div>
