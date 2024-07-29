@@ -118,7 +118,7 @@ class AiService
           properties: {
             establishment: {
               type: 'string',
-              description: "The name of the establishment where the expense was incurred (e.g., 'MacDonalds', 'Cold Storage')."
+              description: "The name of the establishment where the expense was incurred (e.g., 'MacDonalds', 'Cold Storage') or a description of the expense (e.g. 'Lunch', 'Snacks')."
             },
         # Gemini does not seem to understand the concept of date
             # date: {

@@ -8,5 +8,8 @@
       <%= f.text_field :message, placeholder: "tell me your expense", data: { conversation_target: "prompt" }, class: "form-control large-text-field" %>
     <% end %>
   <button class="btn" data-action="click->conversation#saveExpense">save expense</button>
+
+  <%# <%= link_to "Reset Chat", conversation_path(@conversation), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %> %>
+
   </div>
 </div>
