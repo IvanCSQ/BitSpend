@@ -1,6 +1,9 @@
 class ExpensesController < ApplicationController
-  def analysis
+  def index
     params[:date] = Date.today.strftime('%B%Y') if params[:date].nil?
+    @cats = current_user.categories
+    @tags = current_user.expenses.flat_map(&:tag_list).uniq
+    @expenses = current_user.expenses.to_json
   end
 
   def create
@@ -13,7 +16,12 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def analysis
+    params[:date] = Date.today.strftime('%B%Y') if params[:date].nil?
+  end
+
   private
+
   def expense_params
     expense_string = Conversation.last.messages[-1]['parts']['text']
     expense_json = JSON.parse(expense_string).symbolize_keys!

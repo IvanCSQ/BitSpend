@@ -11,8 +11,23 @@
   </head>
 
   <body>
-    <%= yield %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <main>
+      <div id="header">
+        <h2>BitSpend</h2>
+        <div id="head-style">
+          <div class="sub-style">-</div>
+          <div class="sub-style">+</div>
+          <div class="sub-style">x</div>
+        </div>
+      </div>
+      <div id="content">
+        <%= yield %>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+      </div>
+      <nav>
+        <%= render "shared/navbar" %>
+      </nav>
+    </main>
   </body>
 </html>
