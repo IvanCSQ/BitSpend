@@ -20,7 +20,9 @@
 
 
 <%# Display chart for all categories %>
-<canvas data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>"></canvas>
+<div id="chart-container" data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>">
+  <canvas data-chart-target="chart"></canvas>
+</div>
 
 <%# Display total expenses amount for selected date %>
 <p id="total-expenses-amount">TOTAL:&nbsp;&nbsp;$<%= sprintf('%.2f', current_user.total_monthly_expense(params["date"])) %></p>

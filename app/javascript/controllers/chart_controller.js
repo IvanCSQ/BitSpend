@@ -9,6 +9,8 @@ export default class extends Controller {
     categoryAmount: Object
   };
 
+  static targets = ["chart"];
+
   connect() {
     Chart.register(...registerables);
 
@@ -20,12 +22,15 @@ export default class extends Controller {
       labels: userCategories,
       datasets: [{
         data: Object.values(this.categoryAmountValue),
-        hoverOffset: 4
+        hoverOffset: 4,
+        borderWidth: 5,
       }]
     };
 
     // Chart display options
     const options = {
+      responsive: true,
+      aspectRatio: 1.2,
       plugins: {
         legend: {
           display: true,
@@ -34,7 +39,22 @@ export default class extends Controller {
               family: '"Press Start 2P", "Helvetica", "sans-serif"',
               size: 12
             },
-            boxWidth: 20
+            boxWidth: 20,
+            generateLabels: function(chart) {
+              const data = chart.data;
+
+              // Calculate user's total expenses amount and convert category expenses amount into percentage of total amount
+              const total = data.datasets[0].data.reduce((acc, val) => acc + val, 0);
+              const percentage = data.datasets[0].data.map((value) => ((value / total) * 100).toFixed(1) + '%');
+
+              // Modify legend labels to include category name and percentage of total amount
+              return data.labels.map((label, index) => ({
+                text: label + ' - ' + percentage[index],
+                fillStyle: data.datasets[0].backgroundColor[index],
+                hidden: !chart.getDataVisibility(index),
+                index: index
+              }));
+            }
           },
           align: 'start'
         },
@@ -89,15 +109,7 @@ export default class extends Controller {
         //     return rotationAngles
         //   }
         // }
-      },
-      layout: {
-        padding: {
-          left: 80,
-          right: 80,
-          top: 0,
-          bottom: 0
-        }
-      },
+      }
     }
 
     const config = {
@@ -107,7 +119,7 @@ export default class extends Controller {
     };
 
     const chart = new Chart(
-      this.element,
+      this.chartTarget,
       config
     );
   }
