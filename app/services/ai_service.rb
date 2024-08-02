@@ -90,14 +90,14 @@ class AiService
   private
 
   def image_response(response, new_message, config, schema)
-    sse = SSE.new(response.stream, event: "message")
+    sse = SSE.new(response.stream, event: "message") # says this is not valid JSON
     metadata = ""
     full_reply = []
 
     begin
       # This streaming method returns a series of events which are added to the full_reply array
       client.stream_generate_content({
-        contents: new_message, generation_config: config
+          contents: new_message, generation_config: config
         }) do |event, parsed, raw|
         unless event == nil
           full_reply << event['candidates'][0]['content']['parts'][0]['text']
@@ -105,10 +105,13 @@ class AiService
           metadata = response
         end
       end
-      puts full_reply
+      puts full_reply #full_reply gets printed out already
     ensure
       # We join full_reply into a string to stream it
-      sse.write({ message: full_reply.join })
+      puts "entering sse.write"
+      # code crashes here, console says uncaught in promise, e, e.. is not valid json
+      # doing the to_json doesn't help either
+      sse.write({ message: full_reply.join }.to_json)
       sse.close
     end
 

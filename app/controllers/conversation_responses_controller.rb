@@ -1,5 +1,4 @@
 class ConversationResponsesController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:upload]
   include ActionController::Live # allows us to stream response based on server-sent events
 
   def index
