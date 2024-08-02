@@ -11,9 +11,9 @@ export default class extends Controller {
     console.log("connected");
   }
 
-  upload(e) {
-    e.preventDefault()
-    const fileInput = e.target;
+  upload(event) {
+    event.preventDefault()
+    const fileInput = event.target;
     const image = fileInput.files[0];
     const formData = new FormData()
     formData.append("image", image)
@@ -25,12 +25,9 @@ export default class extends Controller {
       },
       body: formData,
     })
-    .then(response => response.json())
-  .then((data) => {
-    console.log(data);
-  })
-  .catch(error => {
-    console.error('Error:', error.message)
+    .then(response => {response.json()})
+  .then(data => {
+      console.log(data);
   })
 }
 

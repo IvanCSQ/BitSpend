@@ -57,49 +57,71 @@ class AiService
     end
 
     def call
+      puts "reached call function"
       # changes the image parsed to base64 encoded
-      base64image = Base64.encode64(File.read(@image.tempfile.path))
-      puts 'image encoded to base64 successfully'
+      # base64_image = Base64.strict_encode64(File.read(@image))
 
-      # inputs the base64 encoded image into the correct format for AI
-      # prompt_image = {
-      #   inline_data: {
-      #     mime_type: 'image/*',
-      #     data: base64image
-      #   }
-      # }
+      schema_to_use = schema('simple')
 
-      # puts "mime_data successful"
+      # Prompts must always be formatted as follows
+      new_message = {
+        role: 'user',
+        parts: [
+            { text: 'Please describe this image.' },
+            { inline_data: {
+              mime_type: 'image/png',
+              data: Base64.strict_encode64(File.read(@image))
+            } }
+          ]
+      }
+      puts "message crafted"
 
-      # does this initialize it to start or to type into the chat interface?
-      # new_message = {
-      #   role: 'user',
-      #   parts: [
-      #     prompt_image, {text: 'what is this image?'}
-      #   ]
-      # }
+      config = {
+        response_mime_type: 'application/json',
+        response_schema: schema_to_use
+      }
 
-      # puts "message crafted"
-
-      image_response(base64image)
+      puts "entering image response"
+      image_response(@response, new_message, config, schema_to_use)
     end
   end
 
 
   private
 
-  def image_response(image)
-    client.generate_content(
-      { contents: [
-        { role: 'user', parts: [
-          { text: 'Please describe this image.' },
-          { inline_data: {
-            mime_type: 'image/*',
-            data: image
-          } }
-        ] }
-      ] }
-    )
+  def image_response(response, new_message, config, schema)
+    sse = SSE.new(response.stream, event: "message")
+    metadata = ""
+    full_reply = []
+
+    begin
+      # This streaming method returns a series of events which are added to the full_reply array
+      client.stream_generate_content({
+        contents: new_message, generation_config: config
+        }) do |event, parsed, raw|
+        unless event == nil
+          full_reply << event['candidates'][0]['content']['parts'][0]['text']
+        else
+          metadata = response
+        end
+      end
+      puts full_reply
+    ensure
+      # We join full_reply into a string to stream it
+      sse.write({ message: full_reply.join })
+      sse.close
+    end
+
+    # Now we update the current Conversation record with the LLM's response
+    new_message = {
+      role: 'model',
+      parts: {
+        text: full_reply.join
+      }
+    }
+    conversation = Conversation.last
+    updated_messages = conversation.messages << new_message
+    conversation.update(messages: updated_messages)
   end
 
   def get_response(response, conversation, config, schema)

@@ -18,6 +18,7 @@ class ConversationResponsesController < ApplicationController
 
   def upload
     response.headers['Content-Type'] = "text/event-stream"
+    response.headers['Last-Modified'] = Time.now.httpdate
     image = params[:image]
 
     if image.nil?
@@ -27,7 +28,7 @@ class ConversationResponsesController < ApplicationController
 
     begin
       # Process the image (assuming AiService::UploadImage processes the image and returns a response)
-      result = AiService::UploadImage.new(image: image, response: response).call
+      AiService::UploadImage.new(image: image, response: response).call
       render json: { message: "Image uploaded successfully", result: result }
     rescue StandardError => e
       render json: { error: e.message }, status: :internal_server_error
