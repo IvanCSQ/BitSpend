@@ -1,4 +1,5 @@
 class ConversationResponsesController < ApplicationController
+  skip_before_action :verify_authenticity_token, only: [:upload]
   include ActionController::Live # allows us to stream response based on server-sent events
 
   def index
@@ -18,6 +19,11 @@ class ConversationResponsesController < ApplicationController
   def upload
     response.headers['Content-Type'] = "text/event-stream"
     image = params[:image]
+
+    if image.nil?
+      render json: { error: "No image provided" }, status: :bad_request
+      return
+    end
 
     begin
       # Process the image (assuming AiService::UploadImage processes the image and returns a response)

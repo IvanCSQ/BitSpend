@@ -3,13 +3,14 @@ class AiService
   require 'json'
   include ActionController::Live # allows us to stream response based on server-sent events, i.e. can initialise SSE below
 
-  # Initialise with user's prompt and the metadata of the webpage which allows streaming
-  def initialize(prompt: "", response:)
-    @prompt = prompt
-    @response = response
-  end
 
   class TextInput < AiService
+    # Initialise with user's prompt and the metadata of the webpage which allows streaming
+    def initialize(prompt: "", response:)
+      @prompt = prompt
+      @response = response
+    end
+
     def call
       puts "This is the prompt: #{@prompt}"
       puts "This is the response: #{@response}"
@@ -61,47 +62,43 @@ class AiService
       puts 'image encoded to base64 successfully'
 
       # inputs the base64 encoded image into the correct format for AI
-      prompt_image = {
-        inlineData: {
-          "mimeType": 'image/*',
-          "data": base64image
-        },
-        {
-        "text": "what is this image?"
-        },
-      }
+      # prompt_image = {
+      #   inline_data: {
+      #     mime_type: 'image/*',
+      #     data: base64image
+      #   }
+      # }
 
-      puts "mime_data successful"
+      # puts "mime_data successful"
 
       # does this initialize it to start or to type into the chat interface?
-      new_message = {
-        role: 'user',
-        parts: [
-          prompt_image, {text: 'what is this image?'}
-        ]
-      }
+      # new_message = {
+      #   role: 'user',
+      #   parts: [
+      #     prompt_image, {text: 'what is this image?'}
+      #   ]
+      # }
 
-      puts "message crafted"
+      # puts "message crafted"
 
-      generation_config = {
-        "max_output_tokens": 8192,
-        "temperature": 1,
-        "top_p": 0.95,
-      }
-
-      image_response(prompt_image, generation_config, safety_settings)
+      image_response(base64image)
     end
   end
 
 
   private
 
-  def image_response
+  def image_response(image)
     client.generate_content(
-      [prompt_image, "what is this image"],
-      generation_config,
-      safety_settings,
-      stream=True,
+      { contents: [
+        { role: 'user', parts: [
+          { text: 'Please describe this image.' },
+          { inline_data: {
+            mime_type: 'image/*',
+            data: image
+          } }
+        ] }
+      ] }
     )
   end
 
