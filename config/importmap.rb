@@ -12,3 +12,5 @@ pin "chartjs-plugin-datalabels", to: "https://ga.jspm.io/npm:chartjs-plugin-data
 pin "marked" # @13.0.0
 pin "typed.js" # @2.1.0
 pin "flatpickr" # @4.6.13
+pin "pikaday" # @1.8.2
+pin "moment" # @2.30.1
