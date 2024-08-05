@@ -16,14 +16,22 @@ class ConversationResponsesController < ApplicationController
   end
 
   def upload
-    response.headers['Content-Type'] = "text/event-stream"
-    response.headers['Last-Modified'] = Time.now.httpdate
     image = params[:image]
-
     if image.nil?
       render json: { error: "No image provided" }, status: :bad_request
       return
     end
+
+    session[:image_path] = image.path
+    render json: { message: "Image uploaded successfully" }
+  end
+
+  def stream_response
+    response.headers['Content-Type'] = "text/event-stream"
+    response.headers['Cache-Control'] = 'no-cache'
+    response.headers['Last-Modified'] = Time.now.httpdate
+
+    image = session[:image_path]
 
     begin
       # Process the image (assuming AiService::UploadImage processes the image and returns a response)

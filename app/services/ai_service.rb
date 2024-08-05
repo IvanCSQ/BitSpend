@@ -59,7 +59,17 @@ class AiService
     def call
       puts "reached call function"
       # changes the image parsed to base64 encoded
-      # base64_image = Base64.strict_encode64(File.read(@image))
+      puts "base64 now"
+      puts @image
+      # @image with the file path exists
+      # not being encoded to base64
+      # debugger on upload path works.
+      # debugger does not work on stream upload path
+      # file path does not exist
+      base64_image = Base64.strict_encode64(File.read(@image))
+      # code crashes here
+      puts base64_image
+      puts "base64 end"
 
       schema_to_use = schema('simple')
 
@@ -69,7 +79,7 @@ class AiService
         parts: [
             { text: 'Please describe this image.' },
             { inline_data: {
-              mime_type: 'image/png',
+              mime_type: 'image/*',
               data: Base64.strict_encode64(File.read(@image))
             } }
           ]
@@ -90,7 +100,7 @@ class AiService
   private
 
   def image_response(response, new_message, config, schema)
-    sse = SSE.new(response.stream, event: "message") # says this is not valid JSON
+    sse = SSE.new(response.stream, event: "image") # says this is not valid JSON
     metadata = ""
     full_reply = []
 
@@ -114,17 +124,21 @@ class AiService
       sse.write({ message: full_reply.join }.to_json)
       sse.close
     end
+    puts "exited sse.write"
 
     # Now we update the current Conversation record with the LLM's response
+    puts "new message"
     new_message = {
       role: 'model',
       parts: {
         text: full_reply.join
       }
     }
+    puts "update conversation"
     conversation = Conversation.last
     updated_messages = conversation.messages << new_message
     conversation.update(messages: updated_messages)
+    puts "end method"
   end
 
   def get_response(response, conversation, config, schema)

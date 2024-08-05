@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :conversation_responses, only: [:index] do
     collection do
       post :upload
+      get :stream_response
     end
   end
 end
