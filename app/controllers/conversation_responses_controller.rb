@@ -37,6 +37,7 @@ class ConversationResponsesController < ApplicationController
       AiService::UploadImage.new(image: image, response: response).call
       render json: { message: "Image uploaded successfully", result: result }
     rescue StandardError => e
+      logger.error("Error processing image: #{e.message}")
       render json: { error: e.message }, status: :internal_server_error
     end
   end
