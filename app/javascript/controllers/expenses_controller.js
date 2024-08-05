@@ -20,8 +20,9 @@ export default class extends Controller {
         categoryTagMap[expense.category_id].add(tag)
       );
     });
+    //categoryTagMap look like this:
+    //{21: Set(9), 22: Set(5)}
 
-    // Category change event
     categorySelect.addEventListener("change", (event) => {
       const categoryId = event.currentTarget.value;
       // Reset tag selection
@@ -40,12 +41,15 @@ export default class extends Controller {
         (expense) => expense.category_id == categoryId
       );
 
-      // Display filtered expenses and update total
-      this.displayExpenses(filteredExpenses);
-      this.updateTotal(filteredExpenses);
+      if (filteredExpenses.length === 0) {
+        this.displayMessage("Current category is empty.");
+      } else {
+        this.displayExpenses(filteredExpenses);
+        this.updateTotal(filteredExpenses);
+      }
     });
 
-    // Tag change event
+    // Tag
     tagSelect.addEventListener("change", (event) => {
       const tagName = event.currentTarget.value;
       const selectedCategoryId = categorySelect.value;
@@ -93,7 +97,6 @@ export default class extends Controller {
         );
       }
 
-      // Display filtered expenses and update total
       this.displayExpenses(filteredExpenses);
       this.updateTotal(filteredExpenses);
     });
@@ -126,7 +129,7 @@ export default class extends Controller {
       `;
       displayExpenses.appendChild(expenseElement);
     });
-    // Remove the 'hidden' class to display the expenses
+
     displayExpenses.classList.remove("hidden");
   }
 
@@ -135,6 +138,12 @@ export default class extends Controller {
     displayExpenses.classList.add("hidden");
     displayExpenses.innerHTML = ""; // Clear the displayed expenses
     this.updateTotal([]); // Reset the total
+  }
+
+  displayMessage(message) {
+    const displayExpenses = this.element.querySelector("#display-expenses");
+    displayExpenses.innerHTML = `<p>${message}</p>`;
+    displayExpenses.classList.remove("hidden");
   }
 
   updateTotal(filteredExpenses) {
