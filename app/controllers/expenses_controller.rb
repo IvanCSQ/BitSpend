@@ -20,18 +20,18 @@ class ExpensesController < ApplicationController
 
   def expense_params
     expense_string = Conversation.last.messages[-1]['parts']['text']
-    expense_json = JSON.parse(expense_string).symbolize_keys!
-    expense_json[:expense].symbolize_keys!
-    expense = expense_json[:expense]
+    expense_hash = JSON.parse(expense_string).symbolize_keys!
+    expense_hash[:expense].symbolize_keys!
+    expense = expense_hash[:expense]
     expense[:tag_list] = expense[:tag_list].join(", ")
 
     # Again hardcoding to first user. Should change to current user when all users have categories
     expense[:category] = User.first.categories.find_by(name: expense[:category])
 
     # TO be removed! Changing the 'establishment' key to 'name' temporarily
-    expense = expense.transform_keys! do |key|
-      key == :establishment ? :name : key
-    end
+    # expense = expense.transform_keys! do |key|
+    #   key == :establishment ? :name : key
+    # end
 
     return expense
   end

@@ -11,8 +11,6 @@ class AiService
 
   class TextInput < AiService
     def call
-      puts "This is the prompt: #{@prompt}"
-      puts "This is the response: #{@response}"
 
       # See the schema method below under private methods. You can edit the schemas there.
       schema_to_use = schema('complex')
@@ -55,30 +53,33 @@ class AiService
     metadata = ""
     full_reply = []
 
+    puts "This is the full prompt: #{conversation.messages}"
+
     begin
       # This streaming method returns a series of events which are added to the full_reply array
       client.stream_generate_content({
         contents: conversation.messages, generation_config: config
         }) do |event, parsed, raw|
-        unless event == nil
-          full_reply << event['candidates'][0]['content']['parts'][0]['text']
-        else
-          metadata = response
+          unless event == nil
+            full_reply << event['candidates'][0]['content']['parts'][0]['text']
+          else
+            metadata = response
+          end
         end
+
+      ensure
+        # Add today's date manually
+        reply_json = JSON.parse(full_reply.join)
+        reply_json['expense']['date'] = Date.today.strftime
+        reply_to_save = reply_json.to_json
+        # We join full_reply into a string to stream it
+        expense = reply_json['expense']
+        reply_to_print = "#{expense['category']}:\n\n$#{format('%.2f', expense['amount'])} for #{expense['name']} on #{expense['date']}\n\nTags: #{expense['tag_list'].join(', ')}.\n\nPlease let me know if I got this right. Otherwise, hit 'Save Expense' to save this to your records."
+        sse.write({ message: reply_to_print })
+        sse.close
       end
 
-    ensure
-      # Add today's date manually
-      reply_json = JSON.parse(full_reply.join)
-      reply_json['expense']['date'] = Date.today.strftime
-      reply_to_save = reply_json.to_json
-      # We join full_reply into a string to stream it
-      expense = reply_json['expense']
-      reply_to_print = "Category: #{expense['category']}:\n\n$#{format('%.2f', expense['amount'])} at #{expense['establishment']} on #{expense['date']}\n\nTags: #{expense['tag_list'].join(', ')}.\n\nPlease let me know if I got this right. Otherwise, hit 'Save Expense' to save this to your records."
-      sse.write({ message: reply_to_print })
-      sse.close
-    end
-
+      puts "This is the raw response: #{full_reply}"
     # Now we update the current Conversation record with the LLM's actual response
     new_message = {
       role: 'model',
@@ -105,9 +106,9 @@ class AiService
   def schema(option)
     # Note that I am hardcoding first user to take categories from, since not all users have categories
     categories = User.first.categories.pluck(:name)
-    user_expenses = Expense.joins(:category).includes(:tags).where(categories: { user: User.first })
-    user_tags = user_expenses.flat_map { |expense| expense.tags.pluck('name') }.uniq
-    today = Date.today.strftime
+    # user_expenses = Expense.joins(:category).includes(:tags).where(categories: { user: User.first })
+    # user_tags = user_expenses.flat_map { |expense| expense.tags.pluck('name') }.uniq
+    # today = Date.today.strftime
 
     # complex_prompt = 'I spent $27.50 at Jade Chicken today with friends today for lunch.'
     complex_schema = {
@@ -116,7 +117,7 @@ class AiService
         expense: {
           type: 'object',
           properties: {
-            establishment: {
+            name: {
               type: 'string',
               description: "The name of the establishment where the expense was incurred (e.g., 'MacDonalds', 'Cold Storage') or a description of the expense (e.g. 'Lunch', 'Snacks')."
             },
@@ -144,7 +145,7 @@ class AiService
               description: "A list of tags or keywords associated with the expense which should be inferred from the context. For example, from an input stating 'had dinner with family for $120 at Haidilao', the tag_list would be ['family', 'dinner']."
             }
           },
-          required: ['establishment', 'amount', 'category', 'tag_list'],
+          required: ['name', 'amount', 'category', 'tag_list'],
           description: "An object representing an individual expense entry."
         }
       }

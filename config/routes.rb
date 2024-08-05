@@ -19,6 +19,10 @@ Rails.application.routes.draw do
   # resources :pages, only: [:home]
   resources :expenses, only: [:new, :create, :index, :analysis]
   resources :categories, only: [:index, :new, :create]
-  resources :conversations, only: [:index, :destroy]
+  resources :conversations, only: [:index] do
+    collection do
+      get :clearconvo
+    end
+  end
   resources :conversation_responses, only: [:index]
 end
