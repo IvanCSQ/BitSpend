@@ -66,6 +66,7 @@ class AiService
       # debugger on upload path works.
       # debugger does not work on stream upload path
       # file path does not exist
+      # base64 can either be done here or done inside new_message. brought it out just to test if it is this encoding part that is the issue. will bring it back down later once it works.
       base64_image = Base64.strict_encode64(File.read(@image))
       # code crashes here
       puts base64_image
