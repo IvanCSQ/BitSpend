@@ -126,6 +126,9 @@ GEM
     faraday-typhoeus (1.1.0)
       faraday (~> 2.0)
       typhoeus (~> 1.4)
+    faraday-typhoeus (1.1.0)
+      faraday (~> 2.0)
+      typhoeus (~> 1.4)
     ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
@@ -138,6 +141,14 @@ GEM
     ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
+    font-awesome-sass (6.5.2)
+      sassc (~> 2.0)
+    gemini-ai (4.1.0)
+      event_stream_parser (~> 1.0)
+      faraday (~> 2.9, >= 2.9.2)
+      faraday-typhoeus (~> 1.1)
+      googleauth (~> 1.8)
+      typhoeus (~> 1.4, >= 1.4.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
     google-cloud-env (2.1.1)
@@ -368,6 +379,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   error_highlight (>= 0.4.0)
+  font-awesome-sass (~> 6.1)
   gemini-ai (~> 4.1.0)
   importmap-rails
   jbuilder

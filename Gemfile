@@ -82,3 +82,5 @@ gem 'acts-as-taggable-on'
 
 # to run scss files
 gem 'sassc-rails'
+
+gem "font-awesome-sass", "~> 6.1"
