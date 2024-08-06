@@ -58,84 +58,72 @@ class AiService
     end
 
     def call
-      puts "reached call function"
-      # changes the image parsed to base64 encoded
-
-      puts "schema"
-      schema_to_use = schema('simple')
-
-      # Prompts must always be formatted as follows
-      puts "new message"
-      new_message = {
+      puts "image message"
+      image_message = {
         role: 'user',
         parts: [
-            { text: 'Please describe this image.' },
+            { text: 'Please identify the name of the location where the receipt was issued (whether an e-shopping site or a retail store), the total amount spent, and the types of items purchased.' },
             { inline_data: {
               mime_type: @image_content_type,
               data: Base64.strict_encode64(File.read(@image))
             } }
           ]
       }
-      puts "message crafted"
+      puts "entering image response"
+      results = image_response(image_message)
+      p 'exited image response'
+
+      schema_to_use = schema('simple')
 
       config = {
         response_mime_type: 'application/json',
         response_schema: schema_to_use
       }
 
-      puts "entering image response"
-      image_response(@response, new_message, config, schema_to_use)
+      new_message = {
+        role: 'user',
+        parts: {
+          text: results
+        }
+      }
+      # Check if there has been any conversation history
+      if Conversation.last.present?
+        # If yes, update the Conversation record with the user's prompt
+        conversation = Conversation.last
+        updated_messages = conversation.messages << new_message
+        conversation.update(messages: updated_messages)
+      else
+        # If no, initialise a new Conversation record with the user's prompt
+        Conversation.create!(messages: [new_message])
+        conversation = Conversation.last
+      end
+
+      get_response(@response, conversation, config, schema_to_use)
     end
   end
 
 
   private
 
-  def image_response(response, new_message, config, schema)
-    sse = SSE.new(response.stream, event: "image") # says this is not valid JSON
-    metadata = ""
+  def image_response(image_message)
     full_reply = []
-
     begin
       # This streaming method returns a series of events which are added to the full_reply array
-      client.stream_generate_content({
-          contents: new_message, generation_config: config
-        }) do |event, parsed, raw|
-        unless event == nil
-          full_reply << event['candidates'][0]['content']['parts'][0]['text']
-        else
-          metadata = response
-        end
-      end
-      puts full_reply #full_reply gets printed out already
-    ensure
-      # We join full_reply into a string to stream it
-      puts "entering sse.write"
-      sse.write({ message: full_reply.join }.to_json)
-      sse.close
+    client.stream_generate_content({
+      contents: image_message
+    }) do |event, parsed, raw|
+      full_reply << event['candidates'][0]['content']['parts'][0]['text']
     end
-    puts "exited sse.write"
-
-    # Now we update the current Conversation record with the LLM's response
-    puts "new message"
-    new_message = {
-      role: 'model',
-      parts: {
-        text: full_reply.join
-      }
-    }
-    puts "update conversation"
-    Conversation.create!(messages: [new_message])
-    p "created convo"
-    conversation = Conversation.last
-    puts "end method"
+    full_reply.join
+    end
   end
+
 
   def get_response(response, conversation, config, schema)
     sse = SSE.new(response.stream, event: "message")
     metadata = ""
     full_reply = []
-
+    p 'starting text streaming'
     begin
       # This streaming method returns a series of events which are added to the full_reply array
       client.stream_generate_content({
@@ -147,12 +135,14 @@ class AiService
           metadata = response
         end
       end
+      p 'text streaming done'
 
     ensure
       # We join full_reply into a string to stream it
       sse.write({ message: full_reply.join })
       sse.close
     end
+    p 'sse writing done'
 
     # Now we update the current Conversation record with the LLM's response
     new_message = {

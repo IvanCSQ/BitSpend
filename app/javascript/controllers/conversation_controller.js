@@ -27,9 +27,9 @@ export default class extends Controller {
     })
     .then(response => {response.json()})
   .then(data => {
-      this.#createLabel('assistant')
-      this.currentContent = this.#createMessage("")
-      this.#setupImageEventSource()
+    this.#createLabel('assistant')
+    this.currentContent = this.#createMessage("")
+    this.#setupImageEventSource()
   })
 }
 
@@ -92,7 +92,7 @@ export default class extends Controller {
 
   #setupImageEventSource() {
     this.eventSource = new EventSource(`/conversation_responses/stream_response`)
-    this.eventSource.addEventListener("image", this.#handleMessage.bind(this))
+    this.eventSource.addEventListener("message", this.#handleMessage.bind(this))
     this.eventSource.addEventListener("error", this.#handleError.bind(this))
   }
 
