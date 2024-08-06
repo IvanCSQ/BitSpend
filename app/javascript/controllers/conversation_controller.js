@@ -30,6 +30,7 @@ export default class extends Controller {
     this.#createLabel('assistant')
     this.currentContent = this.#createMessage("")
     this.#setupImageEventSource()
+    fileInput.value = ""
   })
 }
 
