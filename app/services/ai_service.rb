@@ -51,36 +51,27 @@ class AiService
 
   class UploadImage < AiService
 
-    def initialize(image:, response:)
+    def initialize(image:, image_content_type:, response:)
       @image = image
+      @image_content_type = image_content_type
       @response = response
     end
 
     def call
       puts "reached call function"
       # changes the image parsed to base64 encoded
-      puts "base64 now"
-      puts @image
-      # @image with the file path exists
-      # not being encoded to base64
-      # debugger on upload path works.
-      # debugger does not work on stream upload path
-      # file path does not exist
-      # base64 can either be done here or done inside new_message. brought it out just to test if it is this encoding part that is the issue. will bring it back down later once it works.
-      base64_image = Base64.strict_encode64(File.read(@image))
-      # code crashes here
-      puts base64_image
-      puts "base64 end"
 
+      puts "schema"
       schema_to_use = schema('simple')
 
       # Prompts must always be formatted as follows
+      puts "new message"
       new_message = {
         role: 'user',
         parts: [
             { text: 'Please describe this image.' },
             { inline_data: {
-              mime_type: 'image/*',
+              mime_type: @image_content_type,
               data: Base64.strict_encode64(File.read(@image))
             } }
           ]
@@ -120,8 +111,6 @@ class AiService
     ensure
       # We join full_reply into a string to stream it
       puts "entering sse.write"
-      # code crashes here, console says uncaught in promise, e, e.. is not valid json
-      # doing the to_json doesn't help either
       sse.write({ message: full_reply.join }.to_json)
       sse.close
     end
@@ -136,9 +125,9 @@ class AiService
       }
     }
     puts "update conversation"
+    Conversation.create!(messages: [new_message])
+    p "created convo"
     conversation = Conversation.last
-    updated_messages = conversation.messages << new_message
-    conversation.update(messages: updated_messages)
     puts "end method"
   end
 

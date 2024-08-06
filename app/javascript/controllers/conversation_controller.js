@@ -27,7 +27,6 @@ export default class extends Controller {
     })
     .then(response => {response.json()})
   .then(data => {
-      console.log(data);
       this.#createLabel('assistant')
       this.currentContent = this.#createMessage("")
       this.#setupImageEventSource()
