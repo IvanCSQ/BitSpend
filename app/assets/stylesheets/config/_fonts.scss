@@ -1,11 +1,16 @@
 // imported fonts
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap');
+
+// importing custom fonts
+@font-face {
+  font-family: 'PixeloidSans-mLxMm';
+  src: url('PixeloidSans-mLxMm.ttf');
+}
 
 // defining fonts for body / header
 
-$body-fonts: "Press Start 2P", "Helvetica", "sans-serif";
+$body-fonts: "PixeloidSans-mLxMm", "Helvetica", "sans-serif";
 $header-fonts: "Silkscreen", "Helvetica", "sans-serif";
 
 // applied to all body
@@ -16,4 +21,5 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-fonts;
+  font-weight: 400;
 }
