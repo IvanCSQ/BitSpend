@@ -5,11 +5,16 @@
   margin-top: 80px;
 }
 
+.landing-page:-webkit-scrollbar {
+  display: none;
+}
+
 .log-in-button {
   width: 280px;
   font-family: $bold-fonts;
   height: 56px;
   font-size: 20px;
+  margin-bottom: 20px;
 }
 
 .log-in-button > a {

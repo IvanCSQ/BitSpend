@@ -21,8 +21,12 @@ button:active {
   }
 }
 
+.google-button {
+  // box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+}
+
 .google-login {
-  height: 75px;
+  height: 46px;
   box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
   margin: 15px;
 }

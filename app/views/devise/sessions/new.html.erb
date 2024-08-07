@@ -1,7 +1,6 @@
 <%# log in page %>
 <div class="log-in-page">
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="trial">
     <div class="field input-container">
       <%= image_tag 'pixelated-user.png', class: 'email-icon'  %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'email', class: 'log-in-input' %>
@@ -12,18 +11,42 @@
       <%= f.password_field :password, autocomplete: "current-password", placeholder: 'password', class: 'log-in-input' %>
     </div>
 
+    <div class="log-in-forgot-password">
+      <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <%= link_to "forgot password?", new_password_path(resource_name) %>
+      <% end %>
+    </div>
+
     <% if devise_mapping.rememberable? %>
       <div class="field remember-me-container">
         <%= f.check_box :remember_me, class: 'remember-me-box' %>
         <%= f.label :remember_me, class: 'remember-me-label' %>
       </div>
     <% end %>
-  </div>
 
     <div class="actions login-button-action">
       <button class="button-inner login-button"><%= f.submit "log in", class: 'log-in-page-button' %></button>
     </div>
-  <% end %>
+  <% end %> <%# end for form %>
 
-  <%= render "devise/shared/links" %>
+  <p class="login-page-google-text">or log in with</p>
+    <% if devise_mapping.omniauthable? %>
+      <% resource_class.omniauth_providers.each do |provider| %>
+        <%= form_for "Login",
+          url: omniauth_authorize_path(resource_name, provider),
+          method: :post,
+          data: {turbo: "false"} do |f| %>
+            <%= f.submit "Login", type: "image", src: asset_path("google_logo.png"), class: "google-login button-inner"%><br />
+          <% end %>
+      <% end %>
+    <% end %>
+
+  <div class="login-page-register">
+    <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+      <p>dont have an account?</p>
+      <p><%= link_to "click here", new_registration_path(resource_name) %> to register!</p>
+    <% end %>
+  </div>
+
+  <%# render "devise/shared/links" %>
 </div>

@@ -42,8 +42,21 @@ input:-webkit-autofill {
   // font-family: $body-fonts !important;
 }
 
+.log-in-forgot-password {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+.log-in-forgot-password > a {
+  // text-decoration: none;
+  color: $text;
+  font-size: 12px;
+}
+
 .remember-me-container {
-  margin-top: 10px
+  // margin-top: 10px
 }
 
 .remember-me-label {
@@ -67,4 +80,19 @@ input:-webkit-autofill {
   // height: 56px;
   font-size: 16px;
   letter-spacing: 2px;
+  color: $text;
+}
+
+.login-page-google-text {
+  margin-top: 20px;
+  font-size: 12px;
+}
+
+.login-page-register {
+  font-family: $bold-fonts;
+  font-size: 12px;
+}
+
+.login-page-register > p > a {
+  color: $text;
 }
