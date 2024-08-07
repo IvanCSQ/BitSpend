@@ -1,73 +1,12 @@
 import { Controller } from '@hotwired/stimulus';
-import Pikaday from 'pikaday';
-// import flatpickr from 'flatpickr';
-// import monthSelectPlugin from 'flatpickr/dist/plugins/monthSelect';
 
-// Connects to data-controller='datepicker'
 export default class extends Controller {
-  static targets = ['form', 'input', 'year'];
+  static targets = ['form', 'input', 'year', 'calendar'];
 
   connect() {
-    // const dp = new Pikaday({
-    //   field: this.element,
-    //   format: 'MMMM YYYY',
-    //   bound: false,
-
-    //   // Customise the calendar to show months instead of days
-    //   onDraw: this.drawMonths.bind(this),
-    //   onClick: this.handleMonthClick.bind(this)
-    // });
   }
 
-  // drawMonths(date) {
-  //   let monthContainer = document.querySelector('.pika-lendar');
-  //   let yearSelect = document.querySelector('.pika-select-year');
-
-  //   // Clear existing content
-  //   monthContainer.innerHTML = '';
-
-  //   // Add year selection at the top
-  //   let yearDiv = document.createElement('div');
-  //   yearDiv.className = 'year-select';
-  //   yearDiv.appendChild(yearSelect);
-  //   monthContainer.appendChild(yearDiv);
-
-  //   // Create month grid
-  //   let monthGrid = document.createElement('div');
-  //   monthGrid.className = 'month-grid';
-
-  //   let months = [
-  //       'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-  //       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  //   ];
-
-  //   // Arrange months in a 3x4 grid
-  //   for (let row = 0; row < 3; row++) {
-  //     for (let col = 0; col < 4; col++) {
-  //       let index = col * 3 + row;
-  //       if (index < 12) {
-  //         let monthButton = document.createElement('button');
-  //         monthButton.className = 'month-button';
-  //         monthButton.textContent = months[index];
-  //         monthButton.setAttribute('data-month-index', index);
-  //         monthButton.setAttribute('data-action', 'click->datepicker#handleMonthClick');
-  //         // monthButton.onclick = (e) => {
-  //         //   e.preventDefault();
-  //         //   console.log(e);
-
-  //         //   let selectedDate = new Date(date.getFullYear(), index, 1);
-  //         //   this.setDate(selectedDate);
-  //         //   submitForm(selectedDate);
-  //         // };
-
-  //         monthGrid.appendChild(monthButton);
-  //       }
-  //     }
-  //   }
-
-  //   monthContainer.appendChild(monthGrid);
-  // }
-
+  // When month is clicked, submit form with selected month and year
   handleMonthClick(e) {
     e.preventDefault();
 
@@ -75,16 +14,14 @@ export default class extends Controller {
       this.inputTarget.setAttribute('value', e.target.getAttribute('data-month') + ' ' + this.yearTarget.getAttribute('data-year'));
       this.formTarget.submit();
     }
-  //   if (event.target.matches('.month-button')) {
-  //     event.preventDefault();
-  //     const monthIndex = parseInt(event.target.getAttribute('data-month-index'));
-  //     const year = parseInt(document.querySelector('.pika-select-year').value);
-  //     const selectedDate = new Date(year, monthIndex, 1);
-  //     this.picker.setDate(selectedDate);
-  //     this.submitForm(selectedDate);
-  //   }
   }
 
+  // Toggle datepicker visibility
+  toggle() {
+    this.calendarTarget.hidden ? this.calendarTarget.hidden = false : this.calendarTarget.hidden = true;
+  }
+
+  // Reduce year by 1 when left arrow is clicked
   decreaseYear() {
     const newYear = parseInt(this.yearTarget.getAttribute('data-year')) - 1;
 
@@ -92,6 +29,7 @@ export default class extends Controller {
     this.yearTarget.innerHTML = newYear;
   }
 
+  // Increase year by 1 when right arrow is clicked
   increaseYear() {
     const newYear = parseInt(this.yearTarget.getAttribute('data-year')) + 1;
 
