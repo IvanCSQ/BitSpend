@@ -1,4 +1,4 @@
-<div class="date-container">
+<!-- <div class="date-container">
   <i class="fa-solid fa-caret-left"></i>
   <h1 class="date-header"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
   <i class="fa-solid fa-caret-right"></i>
@@ -12,14 +12,41 @@
     <% end %>
   </select>
   <input type="submit" value="Submit" />
-</form>
+</form> -->
 
-<div class="datepicker-container">
-  <form action="#">
-    <input type="text" data-controller="datepicker" name="datepicker" id="datepicker">
+<%# Display datepicker %>
+<div class="form-container">
+  <form action="#" id="datepicker-form" data-controller="datepicker" data-datepicker-target="form">
+    <input type="text" name="date" id="datepicker-input" placeholder="July 2024" data-datepicker-target="input">
+    <div class="datepicker-container" data-action="click->datepicker#handleMonthClick">
+      <div class="datepicker-row">
+        <i data-action="click->datepicker#decreaseYear" class="fa-sharp fa-solid fa-caret-left"></i>
+        <p data-datepicker-target="year" data-year=<%= Date.today.year %>>2024</p>
+        <i data-action="click->datepicker#increaseYear" class="fa-sharp fa-solid fa-caret-right"></i>
+      </div>
+      <div class="datepicker-row">
+        <button class="month-button" data-month="January">Jan</button>
+        <button class="month-button" data-month="February">Feb</button>
+        <button class="month-button" data-month="March">Mar</button>
+      </div>
+      <div class="datepicker-row">
+        <button class="month-button" data-month="April">Apr</button>
+        <button class="month-button" data-month="May">May</button>
+        <button class="month-button" data-month="June">Jun</button>
+      </div>
+      <div class="datepicker-row">
+        <button class="month-button" data-month="July">Jul</button>
+        <button class="month-button" data-month="August">Aug</button>
+        <button class="month-button" data-month="September">Sep</button>
+      </div>
+      <div class="datepicker-row">
+        <button class="month-button" data-month="Oct">Oct</button>
+        <button class="month-button" data-month="November">Nov</button>
+        <button class="month-button" data-month="December">Dec</button>
+      </div>
+    </div>
   </form>
 </div>
-
 
 <%# Display chart for all categories %>
 <div id="chart-container" data-controller="chart" data-chart-category-list-value="<%= current_user.categories.to_json%>" data-chart-category-amount-value="<%= current_user.category_monthly_expense(params["date"]).to_json %>">
