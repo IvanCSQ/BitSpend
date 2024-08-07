@@ -21,7 +21,7 @@
     <div class="datepicker-container" data-action="click->datepicker#handleMonthClick" data-datepicker-target="calendar" hidden>
       <div class="datepicker-row">
         <i data-action="click->datepicker#decreaseYear" class="fa-sharp fa-solid fa-caret-left"></i>
-        <p data-datepicker-target="year" data-year=<%= Date.today.year %>>2024</p>
+        <p data-datepicker-target="year" data-year=<%= params[:date].split.last %>><%= params[:date].split.last %></p>
         <i data-action="click->datepicker#increaseYear" class="fa-sharp fa-solid fa-caret-right"></i>
       </div>
       <div class="datepicker-row">
