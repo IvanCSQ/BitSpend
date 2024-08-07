@@ -5,24 +5,24 @@ button {
   padding: 9px 16px;
   color: $text;
   border: none;
-  box-shadow: -3px 0 0 0 $text, 3px 0 0 0 $text, 0 -3px 0 0 $text, 0 3px 0 0 $text;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
 }
 
 .button-inner {
-  border-right: 3px solid #ABAFB0;
-  border-bottom: 3px solid #ABAFB0;
+  border-right: 4px solid #ABAFB0;
+  border-bottom: 4px solid #ABAFB0;
 }
 
 button:active {
   background-color: $blue;
   .button-inner {
-    border-right: 3px solid red;
-  border-bottom: 3px solid red;
+    border-right: 4px solid red;
+  border-bottom: 4px solid red;
   }
 }
 
 .google-login {
   height: 75px;
-  box-shadow: -3px 0 0 0 $text, 3px 0 0 0 $text, 0 -3px 0 0 $text, 0 3px 0 0 $text;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
   margin: 15px;
 }
