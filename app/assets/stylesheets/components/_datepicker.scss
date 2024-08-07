@@ -17,11 +17,12 @@ input {
 }
 
 .datepicker-container {
-  z-index: 9999;
+  position: absolute;
+  z-index: 1;
   width: 80%;
-  justify-content: center;
   box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
-  margin: 8px auto;
+  left: 50%;
+  transform: translateX(-50%);
   color: #333;
   background: $navbar;
   border-right: 4px solid #747C7B;
