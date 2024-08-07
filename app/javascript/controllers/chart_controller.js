@@ -23,7 +23,7 @@ export default class extends Controller {
       datasets: [{
         data: Object.values(this.categoryAmountValue),
         hoverOffset: 4,
-        borderWidth: 5,
+        borderWidth: 2,
       }]
     };
 
@@ -42,18 +42,25 @@ export default class extends Controller {
             boxWidth: 20,
             generateLabels: function(chart) {
               const data = chart.data;
+              let legendItems = [];
 
               // Calculate user's total expenses amount and convert category expenses amount into percentage of total amount
               const total = data.datasets[0].data.reduce((acc, val) => acc + val, 0);
               const percentage = data.datasets[0].data.map((value) => ((value / total) * 100).toFixed(1) + '%');
 
               // Modify legend labels to include category name and percentage of total amount
-              return data.labels.map((label, index) => ({
-                text: label + ' - ' + percentage[index],
-                fillStyle: data.datasets[0].backgroundColor[index],
-                hidden: !chart.getDataVisibility(index),
-                index: index
-              }));
+              data.labels.forEach((label, index) => {
+                if (percentage[index]) {
+                  legendItems.push({
+                    text: label + ' - ' + percentage[index],
+                    fillStyle: data.datasets[0].backgroundColor[index],
+                    hidden: !chart.getDataVisibility(index),
+                    index: index
+                  });
+                }
+              });
+
+              return legendItems;
             }
           },
           align: 'start'
