@@ -72,7 +72,7 @@ export default class extends Controller {
     e.preventDefault();
 
     if (e.target.matches('.month-button')) {
-      this.inputTarget.setAttribute('value', e.target.getAttribute('data-month')+'2024') ;
+      this.inputTarget.setAttribute('value', e.target.getAttribute('data-month') + ' ' + this.yearTarget.getAttribute('data-year'));
       this.formTarget.submit();
     }
   //   if (event.target.matches('.month-button')) {
@@ -86,8 +86,16 @@ export default class extends Controller {
   }
 
   decreaseYear() {
-    console.log(this.yearTarget.getAttribute('data-year'));
+    const newYear = parseInt(this.yearTarget.getAttribute('data-year')) - 1;
 
-    this.yearTarget.setAttribute('data-year', parseInt(this.yearTarget.value) - 1) ;
+    this.yearTarget.setAttribute('data-year', newYear);
+    this.yearTarget.innerHTML = newYear;
+  }
+
+  increaseYear() {
+    const newYear = parseInt(this.yearTarget.getAttribute('data-year')) + 1;
+
+    this.yearTarget.setAttribute('data-year', newYear);
+    this.yearTarget.innerHTML = newYear;
   }
 }

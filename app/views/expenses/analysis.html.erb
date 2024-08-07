@@ -17,7 +17,7 @@
 <%# Display datepicker %>
 <div class="form-container">
   <form action="#" id="datepicker-form" data-controller="datepicker" data-datepicker-target="form">
-    <input type="text" name="date" id="datepicker-input" placeholder="July 2024" data-datepicker-target="input">
+    <input value=<%= params[:date] %> type="text" name="date" id="datepicker-input" data-datepicker-target="input">
     <div class="datepicker-container" data-action="click->datepicker#handleMonthClick">
       <div class="datepicker-row">
         <i data-action="click->datepicker#decreaseYear" class="fa-sharp fa-solid fa-caret-left"></i>
