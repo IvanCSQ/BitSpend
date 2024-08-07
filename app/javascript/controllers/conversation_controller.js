@@ -11,6 +11,29 @@ export default class extends Controller {
     console.log("connected");
   }
 
+  upload(event) {
+    event.preventDefault()
+    const fileInput = event.target;
+    const image = fileInput.files[0];
+    const formData = new FormData()
+    formData.append("image", image)
+
+    fetch('/conversation_responses/upload', {
+      method: 'POST',
+      headers: {
+        'X-CSRF-Token': this.csrfToken,
+      },
+      body: formData,
+    })
+    .then(response => {response.json()})
+  .then(data => {
+    this.#createLabel('assistant')
+    this.currentContent = this.#createMessage("")
+    this.#setupImageEventSource()
+    fileInput.value = ""
+  })
+}
+
   saveExpense(event) {
     event.preventDefault()
     this.#createExpense()
@@ -64,6 +87,12 @@ export default class extends Controller {
 
   #setupEventSource() {
     this.eventSource = new EventSource(`/conversation_responses?prompt=${this.promptTarget.value}`)
+    this.eventSource.addEventListener("message", this.#handleMessage.bind(this))
+    this.eventSource.addEventListener("error", this.#handleError.bind(this))
+  }
+
+  #setupImageEventSource() {
+    this.eventSource = new EventSource(`/conversation_responses/stream_response`)
     this.eventSource.addEventListener("message", this.#handleMessage.bind(this))
     this.eventSource.addEventListener("error", this.#handleError.bind(this))
   }
