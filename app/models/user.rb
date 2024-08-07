@@ -21,7 +21,7 @@ class User < ApplicationRecord
     total = 0
 
     expenses.each do |expense|
-      total += expense.amount if expense.date.strftime('%B%Y') == month
+      total += expense.amount if expense.date.strftime('%B %Y') == month
     end
 
     total
@@ -31,7 +31,7 @@ class User < ApplicationRecord
     total_per_category = {}
 
     expenses.each do |expense|
-      if expense.date.strftime('%B%Y') == month
+      if expense.date.strftime('%B %Y') == month
         total_per_category[expense.category.name] ? total_per_category[expense.category.name] += expense.amount : total_per_category[expense.category.name] = expense.amount
       end
     end

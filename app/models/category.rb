@@ -6,7 +6,7 @@ class Category < ApplicationRecord
     total = 0
 
     expenses.each do |expense|
-      total += expense.amount if expense.date.strftime('%B%Y') == month
+      total += expense.amount if expense.date.strftime('%B %Y') == month
     end
 
     total

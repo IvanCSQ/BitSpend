@@ -67,7 +67,7 @@
     <%# Display all expenses in individual category for selected date %>
     <div class="container-items" hidden>
       <% category.expenses.each do |expense| %>
-        <% if expense.date.strftime('%B%Y') == params["date"]  %>
+        <% if expense.date.strftime('%B %Y') == params["date"]  %>
           <div class="">
             <p class="m-1"><%= expense.name.downcase %></p>
             <p class="m-1">$<%= sprintf('%.2f', expense.amount) %></p>
