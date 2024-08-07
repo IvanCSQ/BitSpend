@@ -36,7 +36,7 @@ export default class extends Controller {
           display: true,
           labels: {
             font: {
-              family: '"Press Start 2P", "Helvetica", "sans-serif"',
+              family: '"PixeloidSans-mLxMm", "Helvetica", "sans-serif"',
               size: 12
             },
             boxWidth: 20,
