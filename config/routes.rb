@@ -20,5 +20,10 @@ Rails.application.routes.draw do
   resources :expenses, only: [:new, :create, :index, :analysis]
   resources :categories, only: [:index, :new, :create]
   resources :conversations, only: [:index]
-  resources :conversation_responses, only: [:index]
+  resources :conversation_responses, only: [:index] do
+    collection do
+      post :upload
+      get :stream_response
+    end
+  end
 end
