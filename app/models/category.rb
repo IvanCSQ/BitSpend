@@ -11,4 +11,12 @@ class Category < ApplicationRecord
 
     total
   end
+
+  def any_expense(month)
+    expenses.each do |expense|
+      return true if expense.date.strftime('%B %Y') == month
+    end
+
+    false
+  end
 end
