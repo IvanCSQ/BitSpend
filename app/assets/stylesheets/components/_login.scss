@@ -55,8 +55,8 @@ input:-webkit-autofill {
   font-size: 12px;
 }
 
-.remember-me-container {
-  // margin-top: 10px
+.remember-me-box {
+  accent-color: $base;
 }
 
 .remember-me-label {
@@ -91,6 +91,7 @@ input:-webkit-autofill {
 .login-page-register {
   font-family: $bold-fonts;
   font-size: 12px;
+  text-align: center;
 }
 
 .login-page-register > p > a {
