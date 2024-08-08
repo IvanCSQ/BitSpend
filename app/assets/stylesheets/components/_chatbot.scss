@@ -95,18 +95,14 @@
 }
 
 .chat-bottom {
-  // background-color: red;
-  // border-top: 4px solid $text;
-  // height: 124px;
   width: 100%;
   padding: 20px;
-  position: sticky;
-  bottom: 0;
 }
 
 #chat-form {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 #chat-input {
@@ -114,15 +110,24 @@
   font-family: $body-fonts;
   border: none;
   height: 50px;
+  margin: 0;
+  font-size: 16px;
+  width: 250px;
+  text-align: left;
+  padding-left: 20px;
+  outline: none;
 }
 
 .chat-buttons-div {
-  display: inline-flex;
-  gap: 22px
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .chat-buttons {
   font-size: x-small;
+
 }
 
 .loading-indicator {
