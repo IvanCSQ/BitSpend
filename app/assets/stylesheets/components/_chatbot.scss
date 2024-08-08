@@ -1,6 +1,6 @@
 .chat-container {
   width: 100%;
-  height: 640px;
+  height: 700px;
   box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
   // might have to change according to chat codes
   // position: relative;
@@ -8,12 +8,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-}
-
-.chat-section {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px
 }
 
 .chat-top {
@@ -40,6 +34,14 @@
 }
 
 .chat-bubble-top {
+  width: calc(100% - 4px);
+  height: 4px;
+  margin-left: 4px;
+  background-color: $text;
+  position: relative;
+}
+
+.chat-bubble-bottom {
   width: calc(100% - 4px);
   height: 4px;
   margin-left: 4px;
@@ -76,7 +78,7 @@
   width: calc(100% - 4px);
   border-left: 4px solid $text;
   border-right: 4px solid $text;
-  text-align: center;
+  text-align: left;
   padding: 15px 0;
 }
 
@@ -121,4 +123,20 @@
 
 .chat-buttons {
   font-size: x-small;
+}
+
+.loading-indicator {
+  font-size: 16px;
+  font-weight: bold;
+  color: #888;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }

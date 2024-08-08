@@ -1,7 +1,8 @@
 <div class="chat-container button-inner" data-controller="conversation">
 
-  <section class="chat-section chat-top" data-conversation-target="response">
-  </section>
+<%# removed chat-section class %>
+  <div class="chat-top" data-conversation-target="response">
+  </div>
 
   <div class="chat-divider"></div>
   <div class="chat-bottom">
@@ -13,68 +14,5 @@
       <button class="chat-buttons" data-action="click->conversation#saveExpense">save expense</button>
       <button class="chat-buttons" data-action="click->conversation#resetChat">reset chat</button>
     </div>
-  </div>
-</div>
-
-<div class="chat-container button-inner">
-
-  <div class="chat-top">
-
-    <div class="chat-bubble-user">
-      <div class="chat-bubble-top">
-        <div class="chat-name-user">alexisnsx</div>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-content">
-        <p>$20 at dal.komm coffee</p>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-bubble-top"></div>
-    </div>
-
-    <div class="chat-bubble-bot">
-      <div class="chat-bubble-top">
-        <div class="chat-name-bot">chatbot</div>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-content">
-        <p>recorded $20 spent at dal.komm coffee under food and drinks. I’ve added them under tags ‘Coffee, Cafe, Drinks’ for easier identification. Go to ‘tags’ page at the bottom to filter your expenses via tags!</p>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-bubble-top"></div>
-    </div>
-
-    <div class="chat-bubble-user">
-      <div class="chat-bubble-top">
-        <div class="chat-name-user">alexisnsx</div>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-content">
-        <p>$20 at dal.komm coffee</p>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-bubble-top"></div>
-    </div>
-
-    <div class="chat-bubble-bot">
-      <div class="chat-bubble-top">
-        <div class="chat-name-bot">chatbot</div>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-content">
-        <p>recorded $20 spent at dal.komm coffee under food and drinks. I’ve added them under tags ‘Coffee, Cafe, Drinks’ for easier identification. Go to ‘tags’ page at the bottom to filter your expenses via tags!</p>
-      </div>
-      <div class="chat-bubble-mid"></div>
-      <div class="chat-bubble-top"></div>
-    </div>
-
-  </div>
-  <div class="chat-divider"></div>
-  <div class="chat-bottom">
-    <form id="chat-form">
-      <textarea name="chat-input" id="chat-input" placeholder="type here"></textarea>
-      <%= image_submit_tag "pixelated-send.png", alt: "Submit", width: '45', height: '45' %>
-      <%= image_tag 'pixelated-upload.png', alt: 'send button', width: '60', height: '60' %>
-    </form>
   </div>
 </div>
