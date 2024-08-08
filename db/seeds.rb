@@ -66,6 +66,13 @@ Expense.create!(date: "2024-07-27", name: "Doctor visit", amount: 50.00, categor
 Expense.create!(date: "2024-07-28", name: "Medicine", amount: 10.00, category: u1cat5, tag_list: "others, health, medication")
 Expense.create!(date: "2024-07-29", name: "Haircut", amount: 20.00, category: u1cat5, tag_list: "others, personal care, haircut")
 Expense.create!(date: "2024-07-30", name: "Lunch", amount: 8.00, category: u1cat1, tag_list: "lunch, takeout, food")
+
+Expense.create!(date: "2024-08-01", name: "Breakfast", amount: 5.00, category: u1cat1, tag_list: "morning, milk, bread")
+Expense.create!(date: "2024-08-02", name: "Lunch", amount: 8.00, category: u1cat1, tag_list: "lunch, meat, vegetables")
+Expense.create!(date: "2024-08-03", name: "Dinner", amount: 12.00, category: u1cat1, tag_list: "dinner, seafood, rice")
+Expense.create!(date: "2024-08-04", name: "Bus ticket", amount: 2.50, category: u1cat2, tag_list: "transportation, public, bus")
+Expense.create!(date: "2024-08-05", name: "Taxi ride", amount: 15.00, category: u1cat2, tag_list: "transportation, taxi, travel")
+
 puts "30 Expenses created for User 1!"
 puts "Proceeding to create expenses for User 2..."
 Expense.create!(date: "2024-07-01", name: "Coffee", amount: 3.00, category: u2cat1, tag_list: "drink, caffeine, beverage")
