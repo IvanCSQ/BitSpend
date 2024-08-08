@@ -5,7 +5,7 @@
   <div id="selection">
     <div class="select-container">
       <select name="category" id="category" class="select-box">
-        <option value="">Category</option>
+        <option value="">All Categories</option>
         <% @cats.each do |cat| %>
           <option value="<%= cat.id %>"><%= cat.name %></option>
         <% end %>

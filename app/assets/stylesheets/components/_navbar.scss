@@ -9,3 +9,13 @@ nav {
   // left: 0;
   // bottom: 0;
 }
+
+.nav-icon {
+  height: 40px;
+  width: 40px;
+  transition: transform 0.3s ease;
+}
+
+.nav-icon:active {
+  transform: scale(1.2);
+}
