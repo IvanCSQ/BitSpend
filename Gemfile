@@ -84,3 +84,6 @@ gem 'acts-as-taggable-on'
 gem 'sassc-rails'
 
 gem "font-awesome-sass", "~> 6.1"
+
+# for analysis pie chart
+gem 'chart-js-rails'

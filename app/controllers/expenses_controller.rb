@@ -42,6 +42,10 @@ class ExpensesController < ApplicationController
     end
   end
 
+  def analysis
+    params[:date] = Date.today.strftime('%B %Y') if params[:date].nil?
+  end
+
   private
 
   def expense_params
