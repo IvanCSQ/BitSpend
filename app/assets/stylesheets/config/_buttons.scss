@@ -22,11 +22,12 @@ button:active {
 }
 
 .google-button {
-  // box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .google-login {
   height: 46px;
-  box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
-  margin: 15px;
+  display: block;
 }

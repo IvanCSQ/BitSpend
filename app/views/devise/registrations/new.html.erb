@@ -34,7 +34,9 @@
           url: omniauth_authorize_path(resource_name, provider),
           method: :post,
           data: {turbo: "false"} do |f| %>
-            <%= f.submit "Login", type: "image", src: asset_path("google_logo.png"), class: "google-login button-inner"%><br />
+            <div class="google-button button-inner">
+              <%= f.submit "Login", type: "image", src: asset_path("google_logo.png"), class: 'google-login'%>
+            </div>
           <% end %>
       <% end %>
     <% end %>
