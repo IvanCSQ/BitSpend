@@ -8,7 +8,7 @@
 
   <div class="chat-bottom">
     <%= form_with html: {class: "mb-2", id: "chat-form", data: { action: "conversation#generateResponse" }}  do |f| %>
-      <%= f.text_area :message, placeholder: "type here to track your expenses!", data: { conversation_target: "prompt" }, id: "chat-input" %>
+      <%= f.text_field :message, placeholder: "type here to start!", data: { conversation_target: "prompt" }, id: "chat-input" %>
       <div style="display:none">
         <%= f.file_field :image, id: 'fileInput', data: { action:"change->conversation#upload" }, accept: "image/*" %>
       </div>
