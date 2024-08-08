@@ -25,7 +25,9 @@
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
       </div>
+      <% if user_signed_in? %>
         <%= render "shared/navbar" %>
+      <% end %>
     </main>
   </body>
 </html>
