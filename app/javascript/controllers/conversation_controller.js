@@ -27,8 +27,7 @@ export default class extends Controller {
     })
     .then(response => {response.json()})
   .then(data => {
-    this.#createLabel('assistant')
-    this.currentContent = this.#createMessage("")
+    this.currentContent = this.#createBotMessage();
     this.#setupImageEventSource()
     fileInput.value = ""
   })
