@@ -21,7 +21,11 @@ Rails.application.routes.draw do
   get "analysis", to: "expenses#analysis"
 
   resources :categories, only: [:index, :new, :create]
-  resources :conversations, only: [:index]
+  resources :conversations, only: [:index] do
+    collection do
+      get :clearconvo
+    end
+  end
   resources :conversation_responses, only: [:index] do
     collection do
       post :upload
