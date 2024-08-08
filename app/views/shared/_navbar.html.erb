@@ -1,13 +1,10 @@
-<% if user_signed_in? %>
-  <nav>
-    <div>
-      <%= link_to "1", root_path %>
-    </div>
-    <div>
-      <%= link_to "2", root_path %>
-    </div>
-    <div>
-      <%= link_to "3", expenses_path %>
-    </div>
-  </nav>
-<% end %>
+<div>
+  <%= link_to image_tag("analysis.png" , class:"nav-icon"), root_path %>
+</div>
+<div>
+  <%#= link_to "2", root_path %>
+  <%= link_to image_tag("app-avatar.png", class:"nav-icon"), root_path %>
+</div>
+<div>
+  <%= link_to image_tag("exp-index.png", class:"nav-icon"), expenses_path %>
+</div>

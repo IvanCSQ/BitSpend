@@ -6,16 +6,30 @@ export default class extends Controller {
     const expensesData = this.element.dataset.expenses;
     // Parse the JSON data
     const expenses = JSON.parse(expensesData);
-    // console.log(expenses); // Use the expenses data as needed
 
     const categorySelect = this.element.querySelector("#category");
     const tagSelect = this.element.querySelector("#tag");
 
-    // Category change event
+    // Create a mapping of category IDs to tags
+    const categoryTagMap = {};
+    expenses.forEach((expense) => {
+      if (!categoryTagMap[expense.category_id]) {
+        categoryTagMap[expense.category_id] = new Set();
+      }
+      expense.tag_list.forEach((tag) =>
+        categoryTagMap[expense.category_id].add(tag)
+      );
+    });
+    //categoryTagMap look like this:
+    //{21: Set(9), 22: Set(5)}
+
     categorySelect.addEventListener("change", (event) => {
       const categoryId = event.currentTarget.value;
       // Reset tag selection
       tagSelect.value = "";
+
+      // Update tag options based on selected category
+      this.updateTagOptions(categoryId, categoryTagMap);
 
       if (categoryId === "") {
         this.hideExpenses();
@@ -27,12 +41,15 @@ export default class extends Controller {
         (expense) => expense.category_id == categoryId
       );
 
-      // Display filtered expenses and update total
-      this.displayExpenses(filteredExpenses);
-      this.updateTotal(filteredExpenses);
+      if (filteredExpenses.length === 0) {
+        this.displayMessage("Current category is empty.");
+      } else {
+        this.displayExpenses(filteredExpenses);
+        this.updateTotal(filteredExpenses);
+      }
     });
 
-    // Tag change event
+    // Tag
     tagSelect.addEventListener("change", (event) => {
       const tagName = event.currentTarget.value;
       const selectedCategoryId = categorySelect.value;
@@ -80,10 +97,24 @@ export default class extends Controller {
         );
       }
 
-      // Display filtered expenses and update total
       this.displayExpenses(filteredExpenses);
       this.updateTotal(filteredExpenses);
     });
+  }
+
+  updateTagOptions(categoryId, categoryTagMap) {
+    const tagSelect = this.element.querySelector("#tag");
+    tagSelect.innerHTML = '<option value="">Tag</option>';
+
+    if (categoryTagMap[categoryId]) {
+      const sortedTags = Array.from(categoryTagMap[categoryId]).sort();
+      sortedTags.forEach((tag) => {
+        const option = document.createElement("option");
+        option.value = tag;
+        option.textContent = tag;
+        tagSelect.appendChild(option);
+      });
+    }
   }
 
   displayExpenses(filteredExpenses) {
@@ -98,7 +129,7 @@ export default class extends Controller {
       `;
       displayExpenses.appendChild(expenseElement);
     });
-    // Remove the 'hidden' class to display the expenses
+
     displayExpenses.classList.remove("hidden");
   }
 
@@ -107,6 +138,12 @@ export default class extends Controller {
     displayExpenses.classList.add("hidden");
     displayExpenses.innerHTML = ""; // Clear the displayed expenses
     this.updateTotal([]); // Reset the total
+  }
+
+  displayMessage(message) {
+    const displayExpenses = this.element.querySelector("#display-expenses");
+    displayExpenses.innerHTML = `<p>${message}</p>`;
+    displayExpenses.classList.remove("hidden");
   }
 
   updateTotal(filteredExpenses) {
