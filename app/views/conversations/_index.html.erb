@@ -8,7 +8,12 @@
   <div class="chat-bottom">
     <%= form_with html: {class: "mb-2", id: "chat-form", data: { action: "conversation#generateResponse" }}  do |f| %>
       <%= f.text_field :message, placeholder: "type here", data: { conversation_target: "prompt" }, id: "chat-input" %>
-      <%= image_tag 'pixelated-upload.png', alt: 'send button', width: '60', height: '60' %>
+      <div style="display:none">
+        <%= f.file_field :image, id: 'fileInput', data: { action:"change->conversation#upload" }, accept: "image/*" %>
+      </div>
+      <label for="fileInput" class="custom-file-upload">
+      <%= image_tag 'pixelated-upload.png', alt: "Upload Image", width: '45', height: '45'  %>
+      </label>
     <% end %>
     <div class="chat-buttons-div">
       <button class="chat-buttons" data-action="click->conversation#saveExpense">save expense</button>

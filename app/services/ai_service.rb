@@ -1,15 +1,17 @@
 class AiService
+  require 'base64'
   require 'json'
   require 'date'
   include ActionController::Live # allows us to stream response based on server-sent events, i.e. can initialise SSE below
 
-  # Initialise with user's prompt and the metadata of the webpage which allows streaming
-  def initialize(prompt: "", response:)
-    @prompt = prompt
-    @response = response
-  end
 
   class TextInput < AiService
+    # Initialise with user's prompt and the metadata of the webpage which allows streaming
+    def initialize(prompt: "", response:)
+      @prompt = prompt
+      @response = response
+    end
+
     def call
 
       # See the schema method below under private methods. You can edit the schemas there.
@@ -46,7 +48,75 @@ class AiService
     end
   end
 
+  class UploadImage < AiService
+
+    def initialize(image:, image_content_type:, response:)
+      @image = image
+      @image_content_type = image_content_type
+      @response = response
+    end
+
+    def call
+      puts "image message"
+      image_message = {
+        role: 'user',
+        parts: [
+            { text: 'Please identify the name of the location where the receipt was issued (whether an e-shopping site or a retail store), the total amount spent, and the type of all items purchased. Please do not list out the individual items. Do not list the name where the receipt was issued if it is not listed.' },
+            { inline_data: {
+              mime_type: @image_content_type,
+              data: Base64.strict_encode64(File.read(@image))
+            } }
+          ]
+      }
+      puts "entering image response"
+      results = image_response(image_message)
+      p 'exited image response'
+
+      schema_to_use = schema('complex')
+
+      config = {
+        response_mime_type: 'application/json',
+        response_schema: schema_to_use
+      }
+
+      new_message = {
+        role: 'user',
+        parts: {
+          text: results
+        }
+      }
+      # Check if there has been any conversation history
+      if Conversation.last.present?
+        # If yes, update the Conversation record with the user's prompt
+        conversation = Conversation.last
+        updated_messages = conversation.messages << new_message
+        conversation.update(messages: updated_messages)
+      else
+        # If no, initialise a new Conversation record with the user's prompt
+        Conversation.create!(messages: [new_message])
+        conversation = Conversation.last
+      end
+
+      get_response(@response, conversation, config, schema_to_use)
+    end
+  end
+
+
   private
+
+  def image_response(image_message)
+    full_reply = []
+    begin
+      # This streaming method returns a series of events which are added to the full_reply array
+    client.stream_generate_content({
+      contents: image_message
+    }) do |event, parsed, raw|
+      full_reply << event['candidates'][0]['content']['parts'][0]['text']
+    end
+    full_reply.join
+    end
+  end
+
 
   def get_response(response, conversation, config, schema)
     sse = SSE.new(response.stream, event: "message")

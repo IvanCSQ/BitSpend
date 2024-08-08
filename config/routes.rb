@@ -24,5 +24,10 @@ Rails.application.routes.draw do
       get :clearconvo
     end
   end
-  resources :conversation_responses, only: [:index]
+  resources :conversation_responses, only: [:index] do
+    collection do
+      post :upload
+      get :stream_response
+    end
+  end
 end

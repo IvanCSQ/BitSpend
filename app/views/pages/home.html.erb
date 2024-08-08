@@ -69,7 +69,13 @@
     <form id="chat-form">
       <textarea name="chat-input" id="chat-input" placeholder="type here"></textarea>
       <%= image_submit_tag "pixelated-send.png", alt: "Submit", width: '45', height: '45' %>
-      <%= image_tag 'pixelated-upload.png', alt: 'send button', width: '60', height: '60' %>
+      <%# image_tag 'pixelated-upload.png', alt: 'send button', width: '60', height: '60' %>
+      <input
+              class="file-uploader"
+              type="file"
+              accept="image/*"
+              <%# onchange="this.form.submit()" %>
+            />
     </form>
   </div>
 </div>
