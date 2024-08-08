@@ -1,36 +1,5 @@
 <%# Display datepicker %>
-<div class="form-container">
-  <form action="#" id="datepicker-form" data-controller="datepicker" data-datepicker-target="form">
-    <input value="<%= params[:date] %>" type="text" name="date" id="datepicker-input" data-datepicker-target="input" data-action="click->datepicker#toggle">
-    <div class="datepicker-container" data-action="click->datepicker#handleMonthClick" data-datepicker-target="calendar" hidden>
-      <div class="datepicker-row">
-        <i data-action="click->datepicker#decreaseYear" class="fa-sharp fa-solid fa-caret-left"></i>
-        <p data-datepicker-target="year" data-year=<%= params[:date].split.last %>><%= params[:date].split.last %></p>
-        <i data-action="click->datepicker#increaseYear" class="fa-sharp fa-solid fa-caret-right"></i>
-      </div>
-      <div class="datepicker-row">
-        <button class="month-button" data-month="January">Jan</button>
-        <button class="month-button" data-month="February">Feb</button>
-        <button class="month-button" data-month="March">Mar</button>
-      </div>
-      <div class="datepicker-row">
-        <button class="month-button" data-month="April">Apr</button>
-        <button class="month-button" data-month="May">May</button>
-        <button class="month-button" data-month="June">Jun</button>
-      </div>
-      <div class="datepicker-row">
-        <button class="month-button" data-month="July">Jul</button>
-        <button class="month-button" data-month="August">Aug</button>
-        <button class="month-button" data-month="September">Sep</button>
-      </div>
-      <div class="datepicker-row">
-        <button class="month-button" data-month="Oct">Oct</button>
-        <button class="month-button" data-month="November">Nov</button>
-        <button class="month-button" data-month="December">Dec</button>
-      </div>
-    </div>
-  </form>
-</div>
+<%= render "shared/datepicker", date: params["date"] %>
 
 <% if current_user.total_monthly_expense(params["date"]) > 0 %>
   <%# Display chart for all categories %>
