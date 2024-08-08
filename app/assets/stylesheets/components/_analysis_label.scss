@@ -1,0 +1,22 @@
+.date-container {
+  display: flex;
+  justify-content: center;
+  margin: 16px 0
+}
+
+.fa-solid.fa-caret-left {
+  margin: auto 16px auto 0;
+}
+
+.date-header {
+  margin: 0;
+  text-align: center;
+}
+
+.fa-solid.fa-caret-right {
+  margin: auto 0 auto 16px;
+}
+
+#total-expenses-amount {
+  text-align: center;
+}

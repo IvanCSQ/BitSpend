@@ -1,6 +1,7 @@
 class AiService
   require 'base64'
   require 'json'
+  require 'date'
   include ActionController::Live # allows us to stream response based on server-sent events, i.e. can initialise SSE below
 
 
@@ -12,8 +13,6 @@ class AiService
     end
 
     def call
-      puts "This is the prompt: #{@prompt}"
-      puts "This is the response: #{@response}"
 
       # See the schema method below under private methods. You can edit the schemas there.
       schema_to_use = schema('complex')
@@ -213,7 +212,7 @@ class AiService
               items: {
                 type: 'string',
               },
-              description: "A list of tags or keywords associated with the expense which should be inferred from the context. For example, from an input stating 'had dinner with family for $120 at Haidilao', the tag_list would be ['family', 'dinner']."
+              description: "A list of three tags or keywords associated with the expense which should be inferred from the context. For example, from an input stating 'had dinner with family for $120 at Haidilao', the tag_list would be ['family', 'dinner']."
             }
           },
           required: ['name', 'amount', 'category', 'tag_list'],

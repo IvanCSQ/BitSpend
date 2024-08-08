@@ -17,9 +17,15 @@ Rails.application.routes.draw do
 
   root to: "pages#home"
   # resources :pages, only: [:home]
-  resources :expenses, only: [:new, :create, :index, :analysis]
+  resources :expenses, only: [:new, :create, :index]
+  get "analysis", to: "expenses#analysis"
+
   resources :categories, only: [:index, :new, :create]
-  resources :conversations, only: [:index]
+  resources :conversations, only: [:index] do
+    collection do
+      get :clearconvo
+    end
+  end
   resources :conversation_responses, only: [:index] do
     collection do
       post :upload

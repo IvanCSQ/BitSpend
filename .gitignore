@@ -36,4 +36,4 @@
 .env*
 
 # Ignore Google credentials
-google-credentials.json
+google-credentials.json*
