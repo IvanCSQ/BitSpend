@@ -16,6 +16,11 @@ nav {
   transition: transform 0.3s ease;
 }
 
+.app-avatar {
+  height: 50px;
+  width: 50px;
+}
+
 .nav-icon:active {
   transform: scale(1.2);
 }

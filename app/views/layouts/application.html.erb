@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>BitSpend</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, height=device-height,  initial-scale=1.0, user-scalable=no;user-scalable=0;"/>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -25,10 +25,9 @@
         <p class="notice"><%= notice %></p>
         <p class="alert"><%= alert %></p>
       </div>
-      <nav>
+      <% if user_signed_in? %>
         <%= render "shared/navbar" %>
-      </nav>
+      <% end %>
     </main>
   </body>
 </html>
-

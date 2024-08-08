@@ -8,9 +8,15 @@
   src: url('PixeloidSans-mLxMm.ttf');
 }
 
+@font-face {
+  font-family: 'PixeloidSansBold-PKnYd';
+  src: url('PixeloidSansBold-PKnYd.ttf');
+}
+
 // defining fonts for body / header
 
 $body-fonts: "PixeloidSans-mLxMm", "Helvetica", "sans-serif";
+$bold-fonts: "PixeloidSansBold-PKnYd", "Helvetica", "sans-serif";
 $header-fonts: "Silkscreen", "Helvetica", "sans-serif";
 
 // applied to all body

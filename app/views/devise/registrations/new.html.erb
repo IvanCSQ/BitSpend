@@ -1,29 +1,52 @@
-<h2>Sign up</h2>
+<%# new user sign up %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+<div class="log-in-page">
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <div class="field input-container">
+      <%= image_tag 'pixelated-user.png', class: 'email-icon'  %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: 'email', class: 'log-in-input' %>
+    </div>
+
+    <div class="field input-container">
+      <%= image_tag 'pixelated-password.png', class: 'password-icon'  %>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: 'password', class: 'log-in-input' %>
+    </div>
+      <% if @minimum_password_length %>
+      <em class="min-password">(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %><br />
+
+    <div class="field input-container confirm-password">
+      <%= image_tag 'pixelated-password.png', class: 'password-icon'  %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: 'confirm password', class: 'log-in-input' %>
+    </div>
+
+    <div class="actions login-button-action">
+      <button class="button-inner login-button"><%= f.submit "sign up", class: 'log-in-page-button' %></button>
+    </div>
+  <% end %>
+
+  <p class="login-page-google-text">or sign up with</p>
+    <% if devise_mapping.omniauthable? %>
+      <% resource_class.omniauth_providers.each do |provider| %>
+        <%= form_for "Login",
+          url: omniauth_authorize_path(resource_name, provider),
+          method: :post,
+          data: {turbo: "false"} do |f| %>
+            <div class="google-button button-inner">
+              <%= f.submit "Login", type: "image", src: asset_path("google_logo.png"), class: 'google-login'%>
+            </div>
+          <% end %>
+      <% end %>
+    <% end %>
+
+  <div class="login-page-register">
+    <%- if controller_name != 'sessions' %>
+    <p>already have an account?</p>
+      <p><%= link_to "click here", new_session_path(resource_name) %> to log in!</p>
+    <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

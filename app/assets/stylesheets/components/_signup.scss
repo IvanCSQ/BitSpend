@@ -1,0 +1,25 @@
+.min-password {
+  font-size: 12px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  margin-right: 10px;
+}
+
+.confirm-password {
+  margin-top: 0;
+}
+
+.forgot-password-text {
+  width: 300px;
+}
+
+.forgot-password-text > p {
+  font-size: 12px;
+  text-align: center;
+  font-family: $bold-fonts;
+}
+
+.forgot-password-container {
+  margin-top: 30px;
+}
