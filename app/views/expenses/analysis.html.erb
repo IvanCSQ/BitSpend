@@ -1,19 +1,3 @@
-<!-- <div class="date-container">
-  <i class="fa-solid fa-caret-left"></i>
-  <h1 class="date-header"><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
-  <i class="fa-solid fa-caret-right"></i>
-</div>
-
-<form class="text-center" action="#">
-  <label for="date">Month</label>
-  <select name="date" id="date">
-    <% current_user.months_with_expenses.each do |month| %>
-      <option value=<%= month.delete(' ') %>><%= month %></option>
-    <% end %>
-  </select>
-  <input type="submit" value="Submit" />
-</form> -->
-
 <%# Display datepicker %>
 <div class="form-container">
   <form action="#" id="datepicker-form" data-controller="datepicker" data-datepicker-target="form">
