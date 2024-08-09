@@ -19,9 +19,9 @@
   <%# Display all categories of user %>
   <% current_user.categories.each do |category| %>
     <div
-      class="container-category"
-      data-toggle-target="clickableElement"
-      data-action="click->toggle#show">
+    class="container-category"
+    data-toggle-target="clickableElement"
+    data-action="click->toggle#show">
       <p><%= category.name.downcase %></p>
       <p>$<%= sprintf('%.2f', category.monthly_expense(params["date"])) %></p>
     </div>

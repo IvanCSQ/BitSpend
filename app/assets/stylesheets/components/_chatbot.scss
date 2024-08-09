@@ -1,6 +1,6 @@
 .chat-container {
   width: 100%;
-  height: 700px;
+  height: 100%;
   box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
   // might have to change according to chat codes
   // position: relative;
@@ -11,7 +11,7 @@
 }
 
 .chat-top {
-  height: 502px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   padding: 20px 20px 0 20px;
@@ -21,7 +21,7 @@
 }
 
 .chat-bubble-user {
-  width: 340px;
+  width: 300px;
   // position: absolute;
   // top: 30px;
   // left: 70px;
@@ -29,7 +29,7 @@
 }
 
 .chat-bubble-bot {
-  width: 340px;
+  width: 300px;
   align-self: start;
 }
 
@@ -68,14 +68,14 @@
 }
 
 .chat-bubble-mid {
-  width: calc(100% - 4px);
+  width: calc(100% + 4px);
   height: 4px;
   border-left: 4px solid $text;
   border-right: 4px solid $text;
 }
 
 .chat-content {
-  width: calc(100% - 4px);
+  width: calc(100% + 4px);
   border-left: 4px solid $text;
   border-right: 4px solid $text;
   text-align: left;
@@ -95,18 +95,14 @@
 }
 
 .chat-bottom {
-  // background-color: red;
-  // border-top: 4px solid $text;
-  // height: 124px;
   width: 100%;
   padding: 20px;
-  position: sticky;
-  bottom: 0;
 }
 
 #chat-form {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 #chat-input {
@@ -114,15 +110,24 @@
   font-family: $body-fonts;
   border: none;
   height: 50px;
+  margin: 0;
+  font-size: 16px;
+  width: 100%;
+  text-align: left;
+  padding-left: 20px;
+  outline: none;
 }
 
 .chat-buttons-div {
-  display: inline-flex;
-  gap: 22px
+  display: flex;
+  gap: 22px;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .chat-buttons {
   font-size: x-small;
+
 }
 
 .loading-indicator {
@@ -146,4 +151,6 @@
   cursor: pointer;
 }
 
-
+.chat-top::-webkit-scrollbar {
+  display: none;
+}

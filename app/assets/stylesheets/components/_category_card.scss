@@ -4,8 +4,8 @@
   padding: 12px 16px;
   color: $text;
   box-shadow: -4px 0 0 0 $text, 4px 0 0 0 $text, 0 -4px 0 0 $text, 0 4px 0 0 $text;
-  border-right: 4px solid #ABAFB0;
-  border-bottom: 4px solid #ABAFB0;
+  border-right: 4px solid #A68C8C;
+  border-bottom: 4px solid #A68C8C;
 }
 
 .container-category {
@@ -23,6 +23,7 @@
 .container-items {
   @include container;
   background-color: rgba(232, 194, 193, 0.5);
+  border-left: 4px solid #A68C8C;
 
   div {
     display: flex;
@@ -36,4 +37,8 @@
   div:last-of-type > p {
     margin: 0;
   }
+}
+
+#content::-webkit-scrollbar {
+  display: none;
 }

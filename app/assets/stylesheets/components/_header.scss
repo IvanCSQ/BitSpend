@@ -1,10 +1,14 @@
 #header {
-  height: 6%;
+  height: 8%;
   background-color: $navbar;
   padding: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  h2 {
+    font-family: $bold-fonts;
+    margin-left: 15px;
+  }
 }
 
 #head-style {
@@ -27,6 +31,17 @@
 }
 
 h2 {
-  letter-spacing: -4px;
+  // letter-spacing: -4px;
   font-size: 1.5em;
+}
+
+.log-out {
+  background-color: $pink;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: none;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
 }
