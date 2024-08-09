@@ -1,4 +1,14 @@
-<h1><%= params["date"].gsub(/(\D)(\d)/, '\1 \2') %></h1>
+<%#= render "shared/datepicker", date: params["date"] %>
+<%#= render "shared/datepicker", date: @date_param %>
+<%= render "shared/datepicker", date: params["date"], action: expenses_path %>
+
+
+
+<!--
+<%= form_with url: expenses_path, method: :get, local: true, id: "date-form" do %>
+  <%= date_field_tag :date, params[:date], onchange: "this.form.submit();" %>
+<% end %>
+-->
 
 <div id="expenses-data" data-controller="expenses" data-expenses='<%= @expenses %>'>
   <%# <button> %>
@@ -25,7 +35,16 @@
   <%# </button> %>
 
   <div id="count-total"></div>
-  <div id="display-expenses" class="hidden">
+
+<% if @expenses_exist %>
+    <%# <div id="display-expenses"> %>
+    <div id="display-expenses" class="hidden">
+      <!-- Code to display expenses -->
+    </div>
+  <% else %>
+    <p>No records found for <%= params["date"] %>.</p>
+  <% end %>
+
 
   </div>
 </div>

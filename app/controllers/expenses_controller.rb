@@ -1,12 +1,29 @@
 class ExpensesController < ApplicationController
   def index
-    params[:date] = Date.today.strftime('%B%Y') if params[:date].nil?
-    @cats = current_user.categories
-    @tags = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', Date.today.month, Date.today.year).flat_map(&:tag_list).uniq
-    # @expenses = current_user.expenses.to_json
-    # filter current_user expenses by date
-    @expenses = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', Date.today.month, Date.today.year).to_json
+    # params[:date] = Date.today.strftime('%B %Y') if params[:date].nil?
+    # @cats = current_user.categories
+    # @tags = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', Date.today.month, Date.today.year).flat_map(&:tag_list).uniq
+    # # @expenses = current_user.expenses.to_json
+    # # filter current_user expenses by date
+    # @expenses = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', Date.today.month, Date.today.year).to_json
 
+    if params[:date].nil?
+      params[:date] = Date.today.strftime('%B %Y')
+    end
+
+    selected_date = Date.parse(params[:date])
+    @cats = current_user.categories
+    
+    # @tags = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', selected_date.month, selected_date.year).flat_map(&:tag_list).uniq
+    # @expenses = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', selected_date.month, selected_date.year).to_json
+
+    # @expenses_exist = @expenses.exists?
+
+    expenses_scope = current_user.expenses.where('extract(month from date) = ? AND extract(year from date) = ?', selected_date.month, selected_date.year)
+
+    @expenses_exist = expenses_scope.exists? # Check if any expenses exist
+    @tags = expenses_scope.flat_map(&:tag_list).uniq # Fetch tags only if expenses exist
+    @expenses = expenses_scope.to_json # Convert expenses to JSON
   end
 
   # def index
