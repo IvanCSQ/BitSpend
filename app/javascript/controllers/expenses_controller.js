@@ -23,6 +23,11 @@ export default class extends Controller {
     //categoryTagMap look like this:
     //{21: Set(9), 22: Set(5)}
 
+    // Add a special entry for "All Categories" to include all tags
+    categoryTagMap[""] = new Set(
+      expenses.flatMap((expense) => expense.tag_list)
+    );
+
     categorySelect.addEventListener("change", (event) => {
       const categoryId = event.currentTarget.value;
       // Reset tag selection
