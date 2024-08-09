@@ -1,6 +1,8 @@
 <div class="analysis-page">
   <%# Display datepicker %>
-  <%= render "shared/datepicker", date: params["date"] %>
+  <%#= render "shared/datepicker", date: params["date"] %>
+<%= render "shared/datepicker", date: params["date"], action: "#" %>
+
 
   <% if current_user.total_monthly_expense(params["date"]) > 0 %>
     <%# Display chart for all categories %>
@@ -17,7 +19,10 @@
   <div data-controller="toggle">
     <%# Display all categories of user %>
     <% current_user.categories.each do |category| %>
-      <div class="container-category" data-toggle-target="clickableElement" data-action="click->toggle#show">
+      <div
+      class="container-category"
+      data-toggle-target="clickableElement"
+      data-action="click->toggle#show">
         <p><%= category.name.downcase %></p>
         <p>$<%= sprintf('%.2f', category.monthly_expense(params["date"])) %></p>
       </div>
