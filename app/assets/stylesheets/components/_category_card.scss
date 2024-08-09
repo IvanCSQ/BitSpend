@@ -38,3 +38,7 @@
     margin: 0;
   }
 }
+
+#content::-webkit-scrollbar {
+  display: none;
+}
