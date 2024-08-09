@@ -15,12 +15,15 @@
     <main>
       <div id="header">
         <h2>BITSPEND</h2>
-        <div id="head-style">
-          <%# <div class="sub-style">-</div>
-          <div class="sub-style">+</div>
-          <div class="sub-style">x</div> %>
+        <% if user_signed_in? %>
           <%= button_to "Logout", destroy_user_session_path, data: {turbo: "false"}, method: :delete, class: 'log-out' %>
-        </div>
+        <% else %>
+          <div id="head-style">
+            <div class="sub-style">-</div>
+            <div class="sub-style">+</div>
+            <div class="sub-style">x</div>
+          </div>
+        <% end %>
       </div>
       <div id="content">
         <%= yield %>
